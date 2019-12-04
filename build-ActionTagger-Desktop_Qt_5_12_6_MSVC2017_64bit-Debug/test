@@ -1,0 +1,15 @@
+{
+    "actions": [],
+    "behaviours": [
+        "32",
+        "3232"
+    ],
+    "frames": 295,
+    "name": "test",
+    "sequence": {
+        "actions": [],
+        "behaviours": [],
+        "subactions": []
+    },
+    "subactions": []
+}00007FFEAB2BF3A8
