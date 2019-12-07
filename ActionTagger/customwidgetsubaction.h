@@ -5,16 +5,19 @@
 
 class CustomWidgetSubaction : public CustomWidget
 {
+    Q_OBJECT
+
     QSlider *scrollerLast;
+    QPushButton *alignButtonLast;
 public:
     CustomWidgetSubaction();
     CustomWidgetSubaction(QSet<QString> behaviours, Type type, int id, int initFrame);
     int getLastFrame(){return scrollerLast->value();}
     void setPrecision(int value);
 signals:
-    void somethingChanged(QWidget*);
+
 public slots:
-    void changed();
+    void update_last();
 };
 
 #endif // CUSTOMWIDGETSUBACTION_H

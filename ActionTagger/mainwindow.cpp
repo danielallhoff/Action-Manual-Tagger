@@ -69,6 +69,13 @@ void MainWindow::modify_interval(QWidget* changed){
         intervals[id]->setLastFrame(widget_subaction->getLastFrame());
     }
 }
+/**When modify clicked update scroller
+ * @brief MainWindow::update_scroller
+ */
+void MainWindow::update_scroller(QSlider* slider){
+    int value = ui->frameSlider->value();
+    slider->setValue(value);
+}
 
 void MainWindow::create_json(){
     QString filename = ui->filename_input->text();
@@ -275,10 +282,11 @@ void MainWindow::add_itemWidget(Type type){
             break;
 
     }
-    widget->setPrecision(totalFrames);
+    widget->setPrecision(totalFrames-1);
 
 
     connect(widget,SIGNAL(somethingChanged(QWidget*)), this, SLOT(modify_interval(QWidget*)));
+    connect(widget,SIGNAL(adjustScroller(QSlider*)), this, SLOT(update_scroller(QSlider*)));
     ui->listIntervals->insertItem(pos, newItem);
     ui->listIntervals->setItemWidget(newItem,widget);
 

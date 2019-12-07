@@ -13,6 +13,7 @@
 #include <QSizePolicy>
 #include <iostream>
 
+#include "ui_mainwindow.h"
 #include "type.h"
 class CustomWidget : public QWidget
 {
@@ -28,6 +29,7 @@ class CustomWidget : public QWidget
     QLineEdit *input;
     QComboBox *drop_down_father;
     QComboBox *drop_down_input;
+    QPushButton *alignButton;
     Type type;
 protected:
     QColor* getColor(Type type);
@@ -48,8 +50,11 @@ public:
     virtual void setPrecision(int value);
 signals:
     void somethingChanged(QWidget*);
+    void adjustScroller(QSlider*);
 public slots:
     void changed();
+    void update();
+
 };
 
 #endif // CUSTOMWIDGET_H

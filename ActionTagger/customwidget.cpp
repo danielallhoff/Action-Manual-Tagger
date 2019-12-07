@@ -1,5 +1,6 @@
 #include "customwidget.h"
 
+
 CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent)
 {
 
@@ -13,6 +14,8 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
     idLabel = new QLabel();
     drop_down_father = new QComboBox();
     drop_down_input = new QComboBox();
+    alignButton = new QPushButton();
+
     QColor *color = new QColor();
 
     this->type = type;
@@ -22,10 +25,15 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
         drop_down_father->addItem(item);
         drop_down_input->addItem(item);
     }
+
     color = getColor(type);
 
     scroller->setStyleSheet(QString("QSlider::handle:horizontal {background-color: %1;}").arg(color->name()));
     scroller->setValue(initFrame);
+
+    alignButton->setText("Align");
+    alignButton->setFixedWidth(50);
+
     //Hidden id
     QString id_text = QString::number(id);
     idLabel->setText(id_text);
@@ -38,7 +46,9 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
     //Grid layout
     gridLayout->addWidget(drop_down_input,0,0);
     gridLayout->addWidget(scroller, 0,1);
-    gridLayout->addWidget(idLabel,0,2);
+    gridLayout->addWidget(alignButton,0,2);
+    gridLayout->addWidget(idLabel,0,3);
+
     gridLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
     this->setLayout(gridLayout);
@@ -46,7 +56,7 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
 
     connect(scroller,SIGNAL(valueChanged(int)), this, SLOT(changed()));
     connect(drop_down_input,SIGNAL(currentIndexChanged(int)), this, SLOT(changed()));
-
+    connect(alignButton, SIGNAL(clicked()), this, SLOT(update()));
 }
 
 QColor* CustomWidget::getColor(Type type){
@@ -85,6 +95,10 @@ int CustomWidget::getId(){
 }
 void CustomWidget::changed(){
     emit somethingChanged(this);
+}
+
+void CustomWidget::update(){
+    emit adjustScroller(scroller);
 }
 
 void CustomWidget::setPrecision(int value){

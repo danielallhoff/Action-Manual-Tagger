@@ -41,6 +41,7 @@ private slots:
     void modifyFrame_slider();
     void add_behaviour();
     void modify_interval(QWidget* changed);
+    void update_scroller(QSlider*);
     void add_action();
     void add_subaction();
     void create_json();
@@ -77,8 +78,8 @@ private:
     QSet<QString> all_set;
 
     QStringList frames;
-    QString directory = "../ActionTagger/frames";
-    QString save_JSON = "../ActionTagger/saves";
+    QString directory = "frames";
+    QString save_JSON = "saves";
 
     void load_images();
     void load_image_to_screen(QString filename);
