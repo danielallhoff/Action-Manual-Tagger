@@ -5,7 +5,7 @@
 #include <vector>
 #include <QDir>
 
-
+#pragma comment(lib, "Ws2_32.lib")
 #include <QDir>
 #include<QDebug>
 #include <QtGui>
@@ -19,6 +19,7 @@
 #include <fstream>
 #include <iomanip>
 #include <set>
+
 using json = nlohmann::json;
 
 #include "interval.h"
@@ -49,6 +50,7 @@ private slots:
     void new_action();
     void new_subaction();
 private:
+	
     Ui::MainWindow *ui;
 
     std::vector<Interval*> intervals;
@@ -76,6 +78,8 @@ private:
     QSet<QString> actions_set;
     QSet<QString> subactions_set;
     QSet<QString> all_set;
+
+	std::string const commands[4] = { "get", "set", "play", "pause" };
 
     QStringList frames;
     QString directory = "frames";

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "bhvclient.h"
 #include "./ui_mainwindow.h"
 
 
@@ -9,8 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-
-    //Load images name from one directory
 
     firstFrame= 0;
     lastFrame = 9;
@@ -25,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     id = 0;
 
-    load_images();
-
+    //load_images();
+	QTabWidget tabWidget = 
     //Frames scroller
     connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrame_text()));
     connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
@@ -82,21 +81,41 @@ void MainWindow::create_json(){
 
     save_to_JSON(filename);
 }
+
+
+
 /** Modifies the text value and loads filename by moving the scroller
  * @brief MainWindow::modifyInitFrame_text
  */
 void MainWindow::modifyFrame_text(){
 
     int valueInitFrame = ui->frameSlider->value();
-
+	
     //Convert to frame number
     valueInitFrame = (totalFrames * valueInitFrame)/totalFrames*1.0;
+	
+	if (totalFrames != 0) {
+		std::thread client_thread(&BHVClient::sendMessage, commands[1] + " " + std::to_string(valueInitFrame));
+		client_thread.detach();
+	}
+	else {
+		std::thread client_thread(&BHVClient::sendMessage, commands[0]);
+		client_thread.detach();
+	}
 
+	lastFrame = std::stoi(BHVClient::getResult());
+	totalFrames = lastFrame + 1;
+	std::cout << lastFrame << endl;
+	if (lastFrame > 0) {
+		ui->frameSlider->setMaximum(totalFrames - 1);
+	}
+	
+	
     QString s = QString::number(valueInitFrame);
-    QString filename = frames.at(valueInitFrame);
+	/*QString filename = frames.at(valueInitFrame);
     ui->action_initFrame->setText(s);
     ui->action_lastFrame->setText(filename);
-    load_image_to_screen(filename);
+    //load_image_to_screen(filename);*/
     action_firstFrame = valueInitFrame;
 
 }
