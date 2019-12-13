@@ -3,8 +3,8 @@
 #include "VHDLTab.h"
 #include "VideoTab.h"
 //Create QTabwidget
-TabDialog::TabDialog(QWidget *parent)
-	: QDialog(parent)
+TabWidget::TabWidget()
+	: QWidget()
 {
 	
 	tabWidget = new QTabWidget();
@@ -16,6 +16,4 @@ TabDialog::TabDialog(QWidget *parent)
 	mainLayout->addWidget(tabWidget);
 	//mainLayout->addWidget(buttonBox);
 	setLayout(mainLayout);
-
-	setWindowTitle(tr("Tab Dialog"));
 }

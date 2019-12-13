@@ -29,6 +29,16 @@ add_executable(ActionTagger
   customwidget.h
   customwidgetsubaction.cpp
   customwidgetsubaction.h
+  ImagesTab.cpp
+  TabWidget.cpp
+  VHDLTab.cpp
+  VideoTab.cpp
+  ImagesTab.h
+  TabWidget.h
+  VHDLTab.h
+  VideoTab.h
+  BVHClient.cpp
+  BVHClient.h
 )
 
 #add_library(ActionTagger ...)

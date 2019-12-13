@@ -26,12 +26,12 @@
 #include "customwidgetsubaction.h"
 
 
-class TabDialog : public QDialog
+class TabWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit TabDialog(QWidget *parent = nullptr);
+	explicit TabWidget();
 
 private:
 	QTabWidget *tabWidget;

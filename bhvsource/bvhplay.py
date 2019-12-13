@@ -705,7 +705,10 @@ def read_message(data):
     if split[1] == 'MAX_VALUE':
       return myskeleton.getFrames()
     return slidert.get()
-
+  elif command == 'init':
+    slidert.set(1)
+  elif command = 'end':
+    slidert.set(myskeleton.getFrames())
 
 #Server who receives data
 def server():
@@ -719,9 +722,7 @@ def server():
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   sock.bind(server_address)
   sock.listen(1)
-  while True:
-    
-    
+  while True:        
     print >> sys.stderr, 'waiting for a connection'
     connection, client_address = sock.accept()
 

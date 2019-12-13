@@ -49,6 +49,12 @@ private slots:
     void new_behaviour();
     void new_action();
     void new_subaction();
+	void init_clicked();
+	void play_clicked();
+	void stop_clicked();
+	void last_clicked();
+
+
 private:
 	
     Ui::MainWindow *ui;
@@ -79,7 +85,7 @@ private:
     QSet<QString> subactions_set;
     QSet<QString> all_set;
 
-	std::string const commands[4] = { "get", "set", "play", "pause" };
+	
 
     QStringList frames;
     QString directory = "frames";

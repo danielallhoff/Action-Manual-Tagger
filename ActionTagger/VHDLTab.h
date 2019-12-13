@@ -26,9 +26,16 @@ class VHDLTab : public QWidget
 	Q_OBJECT
 
 public:
-	explicit VHDLTab(QWidget *parent = nullptr);
+	explicit VHDLTab(QWidget *parent = nullptr, QMainWindow *main = nullptr);
+public slots:
 
-private:
+/*
+signals:
+	void PlayPressed();
+	void StopPressed();
+	void InitPressed();
+	void LastPressed();
+*/
 	
 };
 

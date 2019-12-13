@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     id = 0;
 
     //load_images();
-	QTabWidget tabWidget = 
+	
     //Frames scroller
     connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrame_text()));
     connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
@@ -95,11 +95,11 @@ void MainWindow::modifyFrame_text(){
     valueInitFrame = (totalFrames * valueInitFrame)/totalFrames*1.0;
 	
 	if (totalFrames != 0) {
-		std::thread client_thread(&BHVClient::sendMessage, commands[1] + " " + std::to_string(valueInitFrame));
+		std::thread client_thread(&BHVClient::sendMessage, "set "  + std::to_string(valueInitFrame));
 		client_thread.detach();
 	}
 	else {
-		std::thread client_thread(&BHVClient::sendMessage, commands[0]);
+		std::thread client_thread(&BHVClient::sendMessage, "get");
 		client_thread.detach();
 	}
 
@@ -119,6 +119,25 @@ void MainWindow::modifyFrame_text(){
     action_firstFrame = valueInitFrame;
 
 }
+
+
+void init_clicked() {
+	std::thread client_thread(&BHVClient::sendMessage, "init");
+	client_thread.detach();
+}
+void play_clicked() {
+	std::thread client_thread(&BHVClient::sendMessage, "play");
+	client_thread.detach();
+}
+void stop_clicked() {
+	std::thread client_thread(&BHVClient::sendMessage, "stop");
+	client_thread.detach();
+}
+void last_clicked() {
+	std::thread client_thread(&BHVClient::sendMessage, "end");
+	client_thread.detach();
+}
+
 /** Loads an image to a label
  * @brief MainWindow::load_image_to_screen
  * @param filename
