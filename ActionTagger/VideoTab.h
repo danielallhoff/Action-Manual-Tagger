@@ -21,17 +21,24 @@
 #include <set>
 #include <qdialog.h>
 #include <QMediaPlayer>
+#include "TabWidget.h"
 
-class VideoTab : public QWidget
+class VideoTab : public TabWidget
 {
 	Q_OBJECT
 
 public:
 	explicit VideoTab(QWidget *parent = nullptr);
-
+	
+	void init();
+	void last();
+	void pause();
+	void play();
+	void setFrame(int frame);
+	void openFiles(QStringList url);
 private:
-	QTabWidget *tabWidget;
-	QDialogButtonBox *buttonBox;
+	QMediaPlayer *player;
+
 };
 
 #endif

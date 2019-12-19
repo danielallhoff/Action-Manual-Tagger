@@ -27,10 +27,18 @@ class ImagesTab : public QWidget
 
 public:
 	explicit ImagesTab(QWidget *parent = nullptr);
-
+	void init();
+	void last();
+	void pause();
+	void play();
+	void setFrame(int frame);
+	void openFiles(QStringList url);
 private:
-	QTabWidget *tabWidget;
-	QDialogButtonBox *buttonBox;
+	QStringList images;
+	QLabel* image_viewer;
+	void playImages();
+	bool isPlaying = false;
+	int frame;
 };
 
 #endif

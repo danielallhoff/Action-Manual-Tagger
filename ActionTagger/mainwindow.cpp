@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "bhvclient.h"
 #include "./ui_mainwindow.h"
-
+#include "ImagesTab.h"
+#include "VHDLTab.h"
+#include "VideoTab.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,9 +25,21 @@ MainWindow::MainWindow(QWidget *parent)
     int lastFrame = -1;
 
     id = 0;
-
+	ui->tabWidget->clear();
     //load_images();
-	
+	ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
+	ui->tabWidget->addTab(new ImagesTab(), tr("Images"));
+	ui->tabWidget->addTab(new VideoTab(), tr("Videos"));
+
+	//File opener
+	connect(ui->open, SIGNAL(clicked()), this, SLOT(open_files()));
+
+	//Buttons
+	connect(init, SIGNAL(clicked()), this, SLOT(init()));
+	connect(play, SIGNAL(clicked()), this, SLOT(play()));
+	connect(pause, SIGNAL(clicked()), this, SLOT(pause()));
+	connect(last, SIGNAL(clicked()), this, SLOT(last()));
+
     //Frames scroller
     connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrame_text()));
     connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
@@ -40,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->new_action,SIGNAL(clicked()), this, SLOT(new_action()));
     connect(ui->new_subaction,SIGNAL(clicked()), this, SLOT(new_subaction()));
 
+	connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tab_changed()));
     //End tagging
     connect(ui->finish_tagging,SIGNAL(clicked()), this, SLOT(create_json()));
 
@@ -49,6 +64,68 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+/* Tab widget index changed.*/
+void MainWindow::tab_changed() {
+	currentTab = dynamic_cast<TabWidget*>(ui->tabWidget->currentWidget());
+	/*VHDL TAB
+	if (ui->tabWidget->currentIndex() == 0) {
+		
+	}
+
+	//Images TAB
+	if (ui->tabWidget->currentIndex() == 1) {
+
+	}
+
+	//Video TAB
+	if (ui->tabWidget->currentIndex() == 2) {
+
+	}*/
+
+}
+
+void MainWindow::init() {
+	currentTab->init();
+}
+void MainWindow::last() {
+	currentTab->last();
+}
+void MainWindow::play(){
+	currentTab->play();
+}
+void MainWindow::pause() {
+	currentTab->pause();
+}
+
+void MainWindow::open_files() {
+	//VHDL TAB
+	if (ui->tabWidget->currentIndex() == 0) {
+		QMessageBox::warning(this, tr("Manual Tagger"),
+			tr("Cannot open vhdl files, need to use external interface bvhsource!"),
+			QMessageBox::Cancel);
+	}
+
+	//Images TAB
+	if (ui->tabWidget->currentIndex() == 1) {
+		QString fileNames_filters = "Images (*.png *.xpm *.jpg *.jpeg";
+		QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select multiple images"), QDir::homePath(), fileNames_filters);
+		if (fileNames.isEmpty()) {
+			this->filenames = fileNames;
+		}
+	}
+
+	//Video TAB
+	if (ui->tabWidget->currentIndex() == 2) {
+		QString fileNames_filters = "Videos (*.avi *.mp4 *.mov *.mpg)";
+		QString fileNames = QFileDialog::getOpenFileName(this, tr("Select a video"), QDir::homePath(), fileNames_filters);
+		if (fileNames.isEmpty()) {
+			this->filenames.clear();
+			this->filenames.append(fileNames);
+		}
+	}
+	
 }
 
 /** When a qtlistwidgetitem is modified(slider, label, father...etc) it updates the interval.
@@ -82,8 +159,6 @@ void MainWindow::create_json(){
     save_to_JSON(filename);
 }
 
-
-
 /** Modifies the text value and loads filename by moving the scroller
  * @brief MainWindow::modifyInitFrame_text
  */
@@ -111,42 +186,28 @@ void MainWindow::modifyFrame_text(){
 	}
 	
 	
-    QString s = QString::number(valueInitFrame);
-	/*QString filename = frames.at(valueInitFrame);
-    ui->action_initFrame->setText(s);
-    ui->action_lastFrame->setText(filename);
-    //load_image_to_screen(filename);*/
     action_firstFrame = valueInitFrame;
 
 }
 
 
-void init_clicked() {
+void MainWindow::init_clicked() {
 	std::thread client_thread(&BHVClient::sendMessage, "init");
 	client_thread.detach();
 }
-void play_clicked() {
+void MainWindow::play_clicked() {
 	std::thread client_thread(&BHVClient::sendMessage, "play");
 	client_thread.detach();
 }
-void stop_clicked() {
+void MainWindow::stop_clicked() {
 	std::thread client_thread(&BHVClient::sendMessage, "stop");
 	client_thread.detach();
 }
-void last_clicked() {
+void MainWindow::last_clicked() {
 	std::thread client_thread(&BHVClient::sendMessage, "end");
 	client_thread.detach();
 }
 
-/** Loads an image to a label
- * @brief MainWindow::load_image_to_screen
- * @param filename
- */
-void MainWindow::load_image_to_screen(QString filename){
-    QString url= directory + "/" + filename;
-    QPixmap img(url);
-    ui->imageLabel->setPixmap(img);
-}
 
 /** Slider for going through images
  * @brief MainWindow::modifyInitFrame_slider
@@ -330,23 +391,6 @@ void MainWindow::add_itemWidget(Type type){
 
     intervals.push_back(newInterval);
     ++id;
-}
-
-/** Loads all filenames from directory to an array
- * @brief MainWindow::load_images
- */
-void MainWindow::load_images(){
-    frames.clear();
-    QDir dir(directory);
-    frames = dir.entryList(QStringList() << "*.jpg" << "*.png" << "*.JPG", QDir::Files);
-
-    totalFrames = frames.size();
-    QString stringTotal = QString::number(totalFrames);
-    ui->action_lastFrame->setText(stringTotal);
-    lastFrame = totalFrames-1;
-
-    ui->frameSlider->setMaximum(totalFrames-1);
-
 }
 
 /** Saves behaviour segmentation in a readable JSON format

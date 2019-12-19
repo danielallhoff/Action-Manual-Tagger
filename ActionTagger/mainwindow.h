@@ -25,6 +25,7 @@ using json = nlohmann::json;
 #include "interval.h"
 #include "customwidget.h"
 #include "customwidgetsubaction.h"
+#include "TabWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,12 +54,18 @@ private slots:
 	void play_clicked();
 	void stop_clicked();
 	void last_clicked();
-
-
+	void open_files();
+	void tab_changed();
+	void init();
+	void last();
+	void play();
+	void pause();
 private:
 	
-    Ui::MainWindow *ui;
+	TabWidget *currentTab;
 
+    Ui::MainWindow *ui;
+	QStringList filenames;
     std::vector<Interval*> intervals;
     std::vector<QString> behaviours;
     int firstFrame = 0;
@@ -85,14 +92,7 @@ private:
     QSet<QString> subactions_set;
     QSet<QString> all_set;
 
-	
-
-    QStringList frames;
-    QString directory = "frames";
     QString save_JSON = "saves";
-
-    void load_images();
-    void load_image_to_screen(QString filename);
 
     void add_itemWidget(Type type);
     void add_new(QString action_string, Type type);

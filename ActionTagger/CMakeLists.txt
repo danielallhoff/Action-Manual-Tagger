@@ -14,7 +14,7 @@ set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-
+find_package(Qt5Multimedia REQUIRED)
 add_subdirectory(json-develop)
 
 add_executable(ActionTagger
@@ -37,10 +37,10 @@ add_executable(ActionTagger
   TabWidget.h
   VHDLTab.h
   VideoTab.h
-  BVHClient.cpp
-  BVHClient.h
+  BHVClient.cpp
+  BHVClient.h
 )
 
 #add_library(ActionTagger ...)
 
-target_link_libraries(ActionTagger PRIVATE Qt5::Widgets nlohmann_json::nlohmann_json)
+target_link_libraries(ActionTagger PRIVATE Qt5::Widgets nlohmann_json::nlohmann_json Qt5::Multimedia)
