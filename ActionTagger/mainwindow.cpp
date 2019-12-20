@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "bhvclient.h"
 #include "./ui_mainwindow.h"
 #include "ImagesTab.h"
 #include "VHDLTab.h"
@@ -26,24 +25,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     id = 0;
 	ui->tabWidget->clear();
-    //load_images();
-	/*ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
+	ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
 	ui->tabWidget->addTab(new ImagesTab(), tr("Images"));
 	ui->tabWidget->addTab(new VideoTab(), tr("Videos"));
-	/*
+	
 	//File opener
 	connect(ui->open, SIGNAL(clicked()), this, SLOT(open_files()));
 
 	//Buttons
-	connect(init, SIGNAL(clicked()), this, SLOT(init()));
-	connect(play, SIGNAL(clicked()), this, SLOT(play()));
-	connect(pause, SIGNAL(clicked()), this, SLOT(pause()));
-	connect(last, SIGNAL(clicked()), this, SLOT(last()));
+	connect(ui->init, SIGNAL(clicked()), this, SLOT(init()));
+	connect(ui->play, SIGNAL(clicked()), this, SLOT(play()));
+	connect(ui->pause, SIGNAL(clicked()), this, SLOT(pause()));
+	connect(ui->last, SIGNAL(clicked()), this, SLOT(last()));
 	
     //Frames scroller
-    connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrame_text()));
-    connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
-	*/
+    connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrameSlider()));
+    //connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
+	
     //Add a new widget of type behaviour/action or subaction
     connect(ui->add_behaviour,SIGNAL(clicked()), this, SLOT(add_behaviour()));
     connect(ui->add_action,SIGNAL(clicked()), this, SLOT(add_action()));
@@ -68,22 +66,7 @@ MainWindow::~MainWindow()
 
 /* Tab widget index changed.*/
 void MainWindow::tab_changed() {
-	currentTab = dynamic_cast<TabWidget*>(ui->tabWidget->currentWidget());
-	/*VHDL TAB
-	if (ui->tabWidget->currentIndex() == 0) {
-		
-	}
-
-	//Images TAB
-	if (ui->tabWidget->currentIndex() == 1) {
-
-	}
-
-	//Video TAB
-	if (ui->tabWidget->currentIndex() == 2) {
-
-	}*/
-
+	currentTab = dynamic_cast<TabWidget*>(ui->tabWidget->currentWidget());	
 }
 
 void MainWindow::init() {
@@ -103,7 +86,7 @@ void MainWindow::open_files() {
 	//VHDL TAB
 	if (ui->tabWidget->currentIndex() == 0) {
 		QMessageBox::warning(this, tr("Manual Tagger"),
-			tr("Cannot open vhdl files, need to use external interface bvhsource!"),
+			tr("Cannot open vhdl files, open external interface bvhsource!"),
 			QMessageBox::Cancel);
 	}
 
@@ -111,8 +94,11 @@ void MainWindow::open_files() {
 	if (ui->tabWidget->currentIndex() == 1) {
 		QString fileNames_filters = "Images (*.png *.xpm *.jpg *.jpeg";
 		QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select multiple images"), QDir::homePath(), fileNames_filters);
-		if (fileNames.isEmpty()) {
+		if (!fileNames.isEmpty()) {
 			this->filenames = fileNames;
+			currentTab->openFiles(filenames);
+			totalFrames = currentTab->getTotalFrames();
+			lastFrame = totalFrames - 1;
 		}
 	}
 
@@ -120,11 +106,15 @@ void MainWindow::open_files() {
 	if (ui->tabWidget->currentIndex() == 2) {
 		QString fileNames_filters = "Videos (*.avi *.mp4 *.mov *.mpg)";
 		QString fileNames = QFileDialog::getOpenFileName(this, tr("Select a video"), QDir::homePath(), fileNames_filters);
-		if (fileNames.isEmpty()) {
+		if (!fileNames.isEmpty()) {
 			this->filenames.clear();
 			this->filenames.append(fileNames);
+			currentTab->openFiles(filenames);
+			totalFrames = currentTab->getTotalFrames();
+			lastFrame = totalFrames - 1;
 		}
 	}
+
 	
 }
 
@@ -159,61 +149,34 @@ void MainWindow::create_json(){
     save_to_JSON(filename);
 }
 
-/** Modifies the text value and loads filename by moving the scroller
- * @brief MainWindow::modifyInitFrame_text
+/** Modifies the value by slider
+ * @brief MainWindow::modifyFrameSlider
  */
-void MainWindow::modifyFrame_text(){
+void MainWindow::modifyFrameSlider(){
 
-    int valueInitFrame = ui->frameSlider->value();
+    int frameValue = ui->frameSlider->value();
 	
     //Convert to frame number
-    valueInitFrame = (totalFrames * valueInitFrame)/totalFrames*1.0;
-	
-	if (totalFrames != 0) {
-		std::thread client_thread(&BHVClient::sendMessage, "set "  + std::to_string(valueInitFrame));
-		client_thread.detach();
-	}
-	else {
-		std::thread client_thread(&BHVClient::sendMessage, "get");
-		client_thread.detach();
-	}
-
-	lastFrame = std::stoi(BHVClient::getResult());
+	frameValue = (totalFrames * frameValue)/totalFrames*1.0;
+	currentTab->setFrame(frameValue);
+	/*lastFrame = 
 	totalFrames = lastFrame + 1;
-	std::cout << lastFrame << endl;
+	std::cout << lastFrame << endl;*/
 	if (lastFrame > 0) {
 		ui->frameSlider->setMaximum(totalFrames - 1);
 	}
 	
 	
-    action_firstFrame = valueInitFrame;
+    action_firstFrame = frameValue;
 
-}
-
-
-void MainWindow::init_clicked() {
-	std::thread client_thread(&BHVClient::sendMessage, "init");
-	client_thread.detach();
-}
-void MainWindow::play_clicked() {
-	std::thread client_thread(&BHVClient::sendMessage, "play");
-	client_thread.detach();
-}
-void MainWindow::stop_clicked() {
-	std::thread client_thread(&BHVClient::sendMessage, "stop");
-	client_thread.detach();
-}
-void MainWindow::last_clicked() {
-	std::thread client_thread(&BHVClient::sendMessage, "end");
-	client_thread.detach();
 }
 
 
 /** Slider for going through images
  * @brief MainWindow::modifyInitFrame_slider
- */
+ 
 void MainWindow::modifyFrame_slider(){
-   /* QString valueInitFrame = ui->action_initFrame->text();
+	QString valueInitFrame = ui->action_initFrame->text();
     bool ok;
     int valueInt= valueInitFrame.toInt(&ok);
     if(ok){
@@ -226,8 +189,7 @@ void MainWindow::modifyFrame_slider(){
         action_firstFrame = valueInt;
         ui->frameSlider->setValue(valueInt);
     }
-	*/
-}
+}*/
 
 /** Add a behaviour widget
  * @brief MainWindow::add_action

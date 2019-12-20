@@ -2,7 +2,7 @@
 
 //Create images widget
 ImagesTab::ImagesTab(QWidget *parent)
-	: QWidget(parent)
+	: TabWidget(parent)
 {
 	image_viewer = new QLabel();
 	QVBoxLayout *main_layout = new QVBoxLayout;
@@ -38,8 +38,8 @@ void ImagesTab::playImages() {
 
 //Play video with threading
 void ImagesTab::play(){
-	//std::thread player_thread(this->playImages);
-	//player_thread.detach();
+	std::thread player_thread(&ImagesTab::playImages, this);
+	player_thread.detach();
 }
 
 //Set Frame

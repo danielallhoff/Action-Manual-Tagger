@@ -39,8 +39,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private slots:
-    void modifyFrame_text();
-    void modifyFrame_slider();
+    void modifyFrameSlider();
     void add_behaviour();
     void modify_interval(QWidget* changed);
     void update_scroller(QSlider*);
@@ -50,10 +49,6 @@ private slots:
     void new_behaviour();
     void new_action();
     void new_subaction();
-	void init_clicked();
-	void play_clicked();
-	void stop_clicked();
-	void last_clicked();
 	void open_files();
 	void tab_changed();
 	void init();

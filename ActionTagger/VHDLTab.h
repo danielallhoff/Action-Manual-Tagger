@@ -19,23 +19,27 @@
 #include <iomanip>
 #include <set>
 #include <qdialog.h>
+#include "TabWidget.h"
 
-
-class VHDLTab : public QWidget
+class VHDLTab : public TabWidget
 {
 	Q_OBJECT
 
 public:
 	explicit VHDLTab(QWidget *parent = nullptr, QMainWindow *main = nullptr);
+
+	void init();
+	void last();
+	void pause();
+	void play();
+	void setFrame(int frame);
+	int getTotalFrames();
 public slots:
 
-/*
-signals:
-	void PlayPressed();
-	void StopPressed();
-	void InitPressed();
-	void LastPressed();
-*/
+private:
+	int totalFrames = -1;
+
+
 	
 };
 

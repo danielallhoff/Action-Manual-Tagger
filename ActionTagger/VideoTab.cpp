@@ -2,27 +2,33 @@
 
 //Create images widget
 VideoTab::VideoTab(QWidget *parent)
-	: TabWidget()
+	: TabWidget(parent)
 {
-	player = new QMediaPlayer;
-
+	//https://doc.qt.io/archives/qt-4.8/phonon-videowidget.html
+	player = new QMovie;
+	QVBoxLayout *main_layout = new QVBoxLayout;
+	main_layout->addWidget(player);
+	main_layout->addStretch(1);
+	setLayout(main_layout);
 }
 
 void VideoTab::init() {
-	player->setPosition(0);
+	this->setFrame(0);
 }
+
 void VideoTab::last() {
-	player->setPosition(player->duration());
+	this->setFrame(player->frameCount()-1);
 }
 void VideoTab::pause() {
-	player->pause();
+	player->setPaused(true);
 }
 void VideoTab::play() {
-	player->play();
+	player->start();
 }
 void VideoTab::setFrame(int frame) {
-
+	player->jumpToFrame(frame);
 }
 void VideoTab::openFiles(QStringList url) {
-	player->setMedia(QUrl::fromLocalFile(url[0]));
+	player->stop();
+	player->setFileName(url[0]);
 }

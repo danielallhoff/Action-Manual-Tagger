@@ -19,9 +19,9 @@
 #include <iomanip>
 #include <set>
 #include <qdialog.h>
+#include "TabWidget.h"
 
-
-class ImagesTab : public QWidget
+class ImagesTab : public TabWidget
 {
 	Q_OBJECT
 
@@ -33,6 +33,7 @@ public:
 	void play();
 	void setFrame(int frame);
 	void openFiles(QStringList url);
+	int getTotalFrames() { return images.size(); }
 private:
 	QStringList images;
 	QLabel* image_viewer;

@@ -1,31 +1,41 @@
 #include "VHDLTab.h"
-
+#include "BHVClient.h"
 //Create vhdlTab
 VHDLTab::VHDLTab(QWidget *parent, QMainWindow* main)
-	: QWidget(parent)
+	: TabWidget(parent)
 {
-	QPushButton * play = new QPushButton();
-	QPushButton * stop = new QPushButton();
-	QPushButton * init = new QPushButton();
-	QPushButton * last = new QPushButton();
-	/*	
-	QPushButton *button = new QPushButton;
-	button->setIcon(QIcon(":/icons/..."));
-	button->setIconSize(QSize(65, 65));
-	*/
-	QVBoxLayout *controller_layout = new QVBoxLayout();
 	
-	controller_layout->addWidget(init);
-	controller_layout->addWidget(play);
-	controller_layout->addWidget(stop);
-	controller_layout->addWidget(last);
-	controller_layout->addStretch(1);
-	setLayout(controller_layout);
+	totalFrames = -1;
+}
 
-	//Connect each button to mainwindow function
-	connect(init, SIGNAL(clicked()), main, SLOT(init_clicked()));
-	connect(play, SIGNAL(clicked()), main, SLOT(play_clicked()));
-	connect(stop, SIGNAL(clicked()), main, SLOT(stop_clicked()));
-	connect(last, SIGNAL(clicked()), main, SLOT(last_clicked()));
+void VHDLTab::init() {
+	setFrame(0);
+}
+void VHDLTab::last() {
+	setFrame(getTotalFrames());
+}
+void VHDLTab::pause() {
+	std::thread client_thread(&BHVClient::sendMessage, "stop");
+	client_thread.detach();
+}
+void VHDLTab::play() {
+	std::thread client_thread(&BHVClient::sendMessage, "play");
+	client_thread.detach();
+}
 
+int VHDLTab::getTotalFrames() {
+	if (totalFrames == -1) {
+		std::thread client_thread(&BHVClient::sendMessage, "get");
+		client_thread.join();
+		totalFrames = std::stoi(BHVClient::getResult());
+		return totalFrames;
+	}
+	else {
+		return totalFrames;
+	}
+}
+
+void VHDLTab::setFrame(int frame) {
+	std::thread client_thread(&BHVClient::sendMessage, "set " + std::to_string(frame));
+	client_thread.detach();
 }

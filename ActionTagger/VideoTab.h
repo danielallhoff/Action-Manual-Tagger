@@ -36,8 +36,9 @@ public:
 	void play();
 	void setFrame(int frame);
 	void openFiles(QStringList url);
+	int getTotalFrames() { return player->frameCount(); }
 private:
-	QMediaPlayer *player;
+	QMovie *player;
 
 };
 

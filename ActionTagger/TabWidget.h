@@ -31,16 +31,16 @@ class TabWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit TabWidget();
+	explicit TabWidget(QWidget *parent = nullptr);
 	void init(){}
 	void last(){}
 	void pause(){}
 	void play(){}
 	void setFrame(int frame){}
 	void openFiles(QStringList url){}
+	int getTotalFrames() { return -1; }
 private:
-	QTabWidget *tabWidget;
-	QDialogButtonBox *buttonBox;
+	
 };
 
 #endif

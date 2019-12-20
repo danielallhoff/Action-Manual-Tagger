@@ -3,12 +3,9 @@
 #include "VHDLTab.h"
 #include "VideoTab.h"
 //Create QTabwidget
-TabWidget::TabWidget()
-	: QWidget()
+TabWidget::TabWidget(QWidget *parent)
+	: QWidget(parent)
 {
 	
-	QVBoxLayout *mainLayout = new QVBoxLayout;
-	mainLayout->addWidget(tabWidget);
-	//mainLayout->addWidget(buttonBox);
-	setLayout(mainLayout);
+	
 }
