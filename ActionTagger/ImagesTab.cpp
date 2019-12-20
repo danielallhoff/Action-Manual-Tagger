@@ -38,8 +38,8 @@ void ImagesTab::playImages() {
 
 //Play video with threading
 void ImagesTab::play(){
-	std::thread player_thread(this->playImages);
-	player_thread.detach();
+	//std::thread player_thread(this->playImages);
+	//player_thread.detach();
 }
 
 //Set Frame

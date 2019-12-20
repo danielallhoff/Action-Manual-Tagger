@@ -19,8 +19,8 @@ class CustomWidget : public QWidget
 {
     Q_OBJECT
 
-    QGridLayout *gridLayout;
-    QHBoxLayout *layout;
+    QVBoxLayout *vertical;
+    QHBoxLayout *horizontal;
     QSlider *scroller;
 
     QLabel *action;
@@ -46,7 +46,7 @@ public:
     void setInput(QString input);
     void addInput(QString input);
     Type getType(){return type;};
-    void setWidget(int x, int y, QWidget* widget);
+    void addWidgetVertical(QWidget* widget);
     virtual void setPrecision(int value);
 signals:
     void somethingChanged(QWidget*);

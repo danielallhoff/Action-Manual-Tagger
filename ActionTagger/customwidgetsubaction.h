@@ -6,7 +6,7 @@
 class CustomWidgetSubaction : public CustomWidget
 {
     Q_OBJECT
-
+	QHBoxLayout *horizontal;
     QSlider *scrollerLast;
     QPushButton *alignButtonLast;
 public:

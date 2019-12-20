@@ -27,10 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
     id = 0;
 	ui->tabWidget->clear();
     //load_images();
-	ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
+	/*ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
 	ui->tabWidget->addTab(new ImagesTab(), tr("Images"));
 	ui->tabWidget->addTab(new VideoTab(), tr("Videos"));
-
+	/*
 	//File opener
 	connect(ui->open, SIGNAL(clicked()), this, SLOT(open_files()));
 
@@ -39,11 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(play, SIGNAL(clicked()), this, SLOT(play()));
 	connect(pause, SIGNAL(clicked()), this, SLOT(pause()));
 	connect(last, SIGNAL(clicked()), this, SLOT(last()));
-
+	
     //Frames scroller
     connect(ui->frameSlider,SIGNAL(valueChanged(int)),this,SLOT(modifyFrame_text()));
     connect(ui->action_initFrame,SIGNAL(returnPressed()),this,SLOT(modifyFrame_slider()));
-
+	*/
     //Add a new widget of type behaviour/action or subaction
     connect(ui->add_behaviour,SIGNAL(clicked()), this, SLOT(add_behaviour()));
     connect(ui->add_action,SIGNAL(clicked()), this, SLOT(add_action()));
@@ -213,7 +213,7 @@ void MainWindow::last_clicked() {
  * @brief MainWindow::modifyInitFrame_slider
  */
 void MainWindow::modifyFrame_slider(){
-    QString valueInitFrame = ui->action_initFrame->text();
+   /* QString valueInitFrame = ui->action_initFrame->text();
     bool ok;
     int valueInt= valueInitFrame.toInt(&ok);
     if(ok){
@@ -226,7 +226,7 @@ void MainWindow::modifyFrame_slider(){
         action_firstFrame = valueInt;
         ui->frameSlider->setValue(valueInt);
     }
-
+	*/
 }
 
 /** Add a behaviour widget

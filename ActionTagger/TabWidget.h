@@ -32,12 +32,12 @@ class TabWidget : public QWidget
 
 public:
 	explicit TabWidget();
-	void init();
-	void last();
-	void pause();
-	void play();
-	void setFrame(int frame);
-	void openFiles(QStringList url);
+	void init(){}
+	void last(){}
+	void pause(){}
+	void play(){}
+	void setFrame(int frame){}
+	void openFiles(QStringList url){}
 private:
 	QTabWidget *tabWidget;
 	QDialogButtonBox *buttonBox;
