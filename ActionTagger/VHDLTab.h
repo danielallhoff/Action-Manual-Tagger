@@ -26,16 +26,18 @@ class VHDLTab : public TabWidget
 	Q_OBJECT
 
 public:
-	explicit VHDLTab(QWidget *parent = nullptr, QMainWindow *main = nullptr);
+    explicit VHDLTab(QWidget *parent = nullptr);
 
 	void init();
 	void last();
 	void pause();
 	void play();
 	void setFrame(int frame);
-	int getTotalFrames();
-public slots:
+    int getTotalFrames();
+    void openFiles(QStringList url){}
 
+signals:
+    void frameChanged(int);
 private:
 	int totalFrames = -1;
 

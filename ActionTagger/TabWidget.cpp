@@ -4,8 +4,8 @@
 #include "VideoTab.h"
 //Create QTabwidget
 TabWidget::TabWidget(QWidget *parent)
-	: QWidget(parent)
+    : QWidget(parent)
 {
-	
-	
+
+
 }

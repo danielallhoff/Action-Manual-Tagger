@@ -50,11 +50,10 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
 	horizontal->addWidget(idLabel);
 	QWidget *horizontal_widget = new QWidget;
 	horizontal_widget->setLayout(horizontal);
-	vertical->addWidget(horizontal_widget);
-	vertical->setSizeConstraint(QLayout::SetMinimumSize);
-
+    vertical->addWidget(horizontal_widget);
+    vertical->setSizeConstraint(QLayout::SetMinimumSize);
     this->setLayout(vertical);
-    this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum);
+    this->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     connect(scroller,SIGNAL(valueChanged(int)), this, SLOT(changed()));
     connect(drop_down_input,SIGNAL(currentIndexChanged(int)), this, SLOT(changed()));
@@ -113,6 +112,7 @@ void CustomWidget::setId(int id){
 
 void CustomWidget::addWidgetVertical(QWidget* widget){
 	vertical->addWidget(widget);
+    vertical->setSizeConstraint(QLayout::SetMinimumSize);
 }
 
 void CustomWidget::setInput(QString input){

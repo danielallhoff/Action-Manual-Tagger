@@ -37,6 +37,10 @@ public:
 	void setFrame(int frame);
 	void openFiles(QStringList url);
 	int getTotalFrames() { return player->frameCount(); }
+private slots:
+    void frameChanging(int);
+signals:
+    void frameChanged(int);
 private:
 	QMovie *player;
 

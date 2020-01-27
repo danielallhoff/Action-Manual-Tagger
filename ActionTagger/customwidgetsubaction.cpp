@@ -7,17 +7,24 @@ CustomWidgetSubaction::CustomWidgetSubaction(QSet<QString> behaviours, Type type
     QColor* color = getColor(type);
     scrollerLast->setStyleSheet(QString("QSlider::handle:horizontal {background-color: %1;}").arg(color->name()));
     scrollerLast->setValue(initFrame);
-	QWidget  *horizontal_widget = new QWidget;
 
 	alignButtonLast->setText("Align");
 	alignButtonLast->setFixedWidth(50);
 
+    QString id_text = QString::number(id);
 
+    QWidget *spacing_widget = new QWidget();
+    spacing_widget->setFixedWidth(80);
+    //spacing_widget->setHidden(true);
 	horizontal = new QHBoxLayout();
+    horizontal->addWidget(spacing_widget);
 	horizontal->addWidget(scrollerLast);
 	horizontal->addWidget(alignButtonLast);
-    addWidgetVertical(horizontal_widget);
+    QWidget *horizontal_widget = new QWidget;
+    horizontal_widget->setLayout(horizontal);
 
+    addWidgetVertical(horizontal_widget);
+    this->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     connect(scrollerLast,SIGNAL(valueChanged(int)), (CustomWidget*)this, SLOT(changed()));
     connect(alignButtonLast, SIGNAL(clicked()), this, SLOT(update_last()));
 }

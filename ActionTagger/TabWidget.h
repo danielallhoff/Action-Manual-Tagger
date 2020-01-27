@@ -31,16 +31,17 @@ class TabWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit TabWidget(QWidget *parent = nullptr);
-	void init(){}
-	void last(){}
-	void pause(){}
-	void play(){}
-	void setFrame(int frame){}
-	void openFiles(QStringList url){}
-	int getTotalFrames() { return -1; }
-private:
-	
+    explicit TabWidget(QWidget *parent = nullptr);
+    virtual void init() = 0;
+    virtual void last() = 0;
+    virtual void pause() = 0;
+    virtual void play() = 0;
+    virtual void setFrame(int frame) = 0;
+    virtual void openFiles(QStringList url) = 0;
+    virtual int getTotalFrames() = 0;
+
+signals:
+    void frameChanged(int);
 };
 
 #endif

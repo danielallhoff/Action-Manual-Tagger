@@ -4,12 +4,22 @@
 VideoTab::VideoTab(QWidget *parent)
 	: TabWidget(parent)
 {
-	//https://doc.qt.io/archives/qt-4.8/phonon-videowidget.html
-	player = new QMovie;
+    //https://doc.qt.io/qt-5/videooverview.html
+    player = new QMovie;
+
 	QVBoxLayout *main_layout = new QVBoxLayout;
-	main_layout->addWidget(player);
+    QLabel *movieLabel = new QLabel(tr("No movie loades"));
+    movieLabel->setMovie(player);
+    main_layout->addWidget(movieLabel);
 	main_layout->addStretch(1);
 	setLayout(main_layout);
+    //https://doc.qt.io/archives/qt-4.8/qmovie.html#stateChanged
+    connect(player, SIGNAL(frameChanged(int)), this, SLOT(frameChanging(int)));
+
+};
+
+void VideoTab::frameChanging(int frame){
+    emit frameChanged(frame);
 }
 
 void VideoTab::init() {

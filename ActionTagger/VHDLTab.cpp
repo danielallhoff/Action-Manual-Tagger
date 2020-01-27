@@ -1,7 +1,7 @@
 #include "VHDLTab.h"
 #include "BHVClient.h"
 //Create vhdlTab
-VHDLTab::VHDLTab(QWidget *parent, QMainWindow* main)
+VHDLTab::VHDLTab(QWidget *parent)
 	: TabWidget(parent)
 {
 	
@@ -38,4 +38,5 @@ int VHDLTab::getTotalFrames() {
 void VHDLTab::setFrame(int frame) {
 	std::thread client_thread(&BHVClient::sendMessage, "set " + std::to_string(frame));
 	client_thread.detach();
+    emit frameChanged(frame);
 }

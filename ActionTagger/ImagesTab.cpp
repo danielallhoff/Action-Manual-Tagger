@@ -27,17 +27,22 @@ void ImagesTab::pause() {
 }
 //Play images with 30 fps
 void ImagesTab::playImages() {
-	while (isPlaying) {
+    if(frame == images.size()-1){
+        frame = 0;
+    }
+    while (isPlaying && frame < images.size()) {
 		QPixmap img(images[frame]);
 		this->image_viewer->setPixmap(img);
 		//34 milliseconds each frame
 		Sleep(34);
+        emit frameChanged(frame);
 		++frame;
 	}
 }
 
 //Play video with threading
 void ImagesTab::play(){
+    isPlaying = true;
 	std::thread player_thread(&ImagesTab::playImages, this);
 	player_thread.detach();
 }
@@ -47,7 +52,10 @@ void ImagesTab::setFrame(int frame) {
 	QPixmap img(images[frame]);
 	this->image_viewer->setPixmap(img);
 	this->frame = frame;
+    qDebug() << "Frame changed" << endl;
+    emit frameChanged(frame);
 }
 void ImagesTab::openFiles(QStringList url) {
 	this->images = url;
+    setFrame(0);
 }

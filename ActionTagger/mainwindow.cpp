@@ -3,7 +3,7 @@
 #include "ImagesTab.h"
 #include "VHDLTab.h"
 #include "VideoTab.h"
-
+#include "TabWidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,11 +24,20 @@ MainWindow::MainWindow(QWidget *parent)
     int lastFrame = -1;
 
     id = 0;
-	ui->tabWidget->clear();
-	ui->tabWidget->addTab(new VHDLTab(nullptr, this), tr("VHDL"));
-	ui->tabWidget->addTab(new ImagesTab(), tr("Images"));
-	ui->tabWidget->addTab(new VideoTab(), tr("Videos"));
-	
+    //Clear default tabs
+    ui->tabWidget->clear();
+    bool resourcesLoaded = false;
+    //Add new tabs
+    TabWidget* VHDLTabWidget = new VHDLTab();
+    ImagesTab* ImagesTabWidget = new ImagesTab();
+    VideoTab* VideoTabWidget = new VideoTab();
+    connect(VHDLTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+    connect(ImagesTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+    connect(VideoTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+    ui->tabWidget->addTab(VHDLTabWidget, tr("VHDL"));
+    ui->tabWidget->addTab(ImagesTabWidget, tr("Images"));
+    ui->tabWidget->addTab( VideoTabWidget, tr("Videos"));
+
 	//File opener
 	connect(ui->open, SIGNAL(clicked()), this, SLOT(open_files()));
 
@@ -66,20 +75,61 @@ MainWindow::~MainWindow()
 
 /* Tab widget index changed.*/
 void MainWindow::tab_changed() {
-	currentTab = dynamic_cast<TabWidget*>(ui->tabWidget->currentWidget());	
+    currentTab = dynamic_cast<TabWidget*>(ui->tabWidget->currentWidget());
+    qDebug() << "Tab changed" << endl;
+}
+
+void MainWindow::frameChanged(int frame){
+
+    if(frame < 0){
+        frame = 0;
+    }else if(frame >= totalFrames){
+        frame = totalFrames - 1;
+    }
+
+    ui->frameSlider->setValue(frame);
+
 }
 
 void MainWindow::init() {
-	currentTab->init();
+    try {
+        currentTab->init();
+    } catch (QException exception) {
+        QMessageBox::warning(this, tr("Manual Tagger"),
+            tr("Resources yet not loaded. Open a resource."),
+            QMessageBox::Cancel);
+    }
+
 }
 void MainWindow::last() {
-	currentTab->last();
+    try {
+        currentTab->last();
+    } catch (QException exception) {
+        QMessageBox::warning(this, tr("Manual Tagger"),
+            tr("Resources yet not loaded. Open a resource."),
+            QMessageBox::Cancel);
+    }
+
 }
 void MainWindow::play(){
-	currentTab->play();
+    try {
+        currentTab->play();
+    } catch (QException exception) {
+        QMessageBox::warning(this, tr("Manual Tagger"),
+            tr("Resources yet not loaded. Open a resource."),
+            QMessageBox::Cancel);
+    }
+
 }
 void MainWindow::pause() {
-	currentTab->pause();
+    try {
+        currentTab->pause();
+    } catch (QException exception) {
+        QMessageBox::warning(this, tr("Manual Tagger"),
+            tr("Resources yet not loaded. Open a resource."),
+            QMessageBox::Cancel);
+    }
+
 }
 
 void MainWindow::open_files() {
@@ -98,20 +148,20 @@ void MainWindow::open_files() {
 			this->filenames = fileNames;
 			currentTab->openFiles(filenames);
 			totalFrames = currentTab->getTotalFrames();
-			lastFrame = totalFrames - 1;
+			lastFrame = totalFrames - 1;            
 		}
 	}
 
 	//Video TAB
 	if (ui->tabWidget->currentIndex() == 2) {
-		QString fileNames_filters = "Videos (*.avi *.mp4 *.mov *.mpg)";
+        QString fileNames_filters = "Videos (*.avi *.mp4 *.mov *.mpg *.gif)";
 		QString fileNames = QFileDialog::getOpenFileName(this, tr("Select a video"), QDir::homePath(), fileNames_filters);
 		if (!fileNames.isEmpty()) {
 			this->filenames.clear();
 			this->filenames.append(fileNames);
 			currentTab->openFiles(filenames);
 			totalFrames = currentTab->getTotalFrames();
-			lastFrame = totalFrames - 1;
+			lastFrame = totalFrames - 1;            
 		}
 	}
 
@@ -235,7 +285,7 @@ void MainWindow::new_action(){
     QString action_string = ui->new_value->text();
 
     if(action_string != "" && !all_set.contains(action_string)){
-        behaviours.push_back(action_string);
+        actions.push_back(action_string);
         lastAction = action_string;
         add_new(action_string, ACTION);
     }else{
@@ -253,7 +303,7 @@ void MainWindow::new_subaction(){
     QString action_string = ui->new_value->text();
 
     if(action_string != "" && !all_set.contains(action_string)){
-        behaviours.push_back(action_string);
+        subactions.push_back(action_string);
         add_new(action_string, SUBACTION);
     }else{
         QMessageBox::warning(
@@ -459,8 +509,9 @@ void MainWindow::save_to_JSON(QString name){
         j["sequence"]["subactions"] = subactionsFrames;
         //Output to file
         std::ofstream o(name.toStdString()+".json");
-        //o << std::setw(4) << j << std::endl;
-        o << j << std::endl;
+        //Output mode
+        o << std::setw(4) << j << std::endl;
+        //o << j << std::endl;
         QMessageBox::information(
             this,
             tr("Manual Tagger"),

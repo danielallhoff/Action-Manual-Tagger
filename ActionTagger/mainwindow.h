@@ -55,6 +55,7 @@ private slots:
 	void last();
 	void play();
 	void pause();
+    void frameChanged(int);
 private:
 	
 	TabWidget *currentTab;
@@ -63,6 +64,8 @@ private:
 	QStringList filenames;
     std::vector<Interval*> intervals;
     std::vector<QString> behaviours;
+    std::vector<QString> actions;
+    std::vector<QString> subactions;
     int firstFrame = 0;
     int lastFrame = 9;
     int totalFrames = 10;
@@ -93,5 +96,6 @@ private:
     void add_new(QString action_string, Type type);
 
     void save_to_JSON(QString name);
+    void setFrameScroller(int frame);
 };
 #endif // MAINWINDOW_H
