@@ -40,6 +40,8 @@ private:
 	void playImages();
 	bool isPlaying = false;
 	int frame;
+	
+	
 };
 
 #endif

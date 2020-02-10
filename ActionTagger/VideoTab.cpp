@@ -4,17 +4,14 @@
 VideoTab::VideoTab(QWidget *parent)
 	: TabWidget(parent)
 {
-    //https://doc.qt.io/qt-5/videooverview.html
-    player = new QMovie;
-
 	QVBoxLayout *main_layout = new QVBoxLayout;
-    QLabel *movieLabel = new QLabel(tr("No movie loades"));
-    movieLabel->setMovie(player);
+    QLabel *movieLabel = new QLabel(tr("No video loaded"));
+   
     main_layout->addWidget(movieLabel);
 	main_layout->addStretch(1);
 	setLayout(main_layout);
-    //https://doc.qt.io/archives/qt-4.8/qmovie.html#stateChanged
-    connect(player, SIGNAL(frameChanged(int)), this, SLOT(frameChanging(int)));
+    
+    connect(this, SIGNAL(frameChanged(int)), this, SLOT(frameChanging(int)));
 
 };
 
@@ -27,18 +24,117 @@ void VideoTab::init() {
 }
 
 void VideoTab::last() {
-	this->setFrame(player->frameCount()-1);
+	this->setFrame(totalFrames-1);
 }
+
+//Play images with 30 fps
+void VideoTab::playImages() {
+	if (isPlaying && frame == totalFrames -1) {
+		frame = 0;
+	}
+	while (isPlaying && frame < totalFrames) {
+		
+		this->image_viewer->setPixmap(images[frame]);
+		//34 milliseconds each frame
+		Sleep(34);
+		emit frameChanged(frame);
+		++frame;
+	}
+}
+
 void VideoTab::pause() {
-	player->setPaused(true);
+	isPlaying = false;
 }
 void VideoTab::play() {
-	player->start();
+	isPlaying = true;
+	std::thread player_thread(&VideoTab::playImages, this);
+	player_thread.detach();
 }
 void VideoTab::setFrame(int frame) {
-	player->jumpToFrame(frame);
+	if (frame >= 0 && frame <= totalFrames) {
+		qDebug() << "Frame changed" << endl;
+		emit frameChanged(frame);
+		cap.set(cv::CAP_PROP_POS_FRAMES, frame);
+	}
 }
 void VideoTab::openFiles(QStringList url) {
-	player->stop();
-	player->setFileName(url[0]);
+	cap = VideoCapture(url[0].toStdString());
+	totalFrames = cap.get(cv::CAP_PROP_FRAME_COUNT);
+	images.resize(totalFrames);
+	frame = 0;
+	for (;;) {
+		Mat cvframe;
+		cap >> cvframe;
+		if (cvframe.empty())
+			break;
+		QPixmap img = cvMatToQPixmap(cvframe);
+		images[frame] = img;
+		++frame;
+	}
+}
+
+QImage VideoTab::cvMatToQIMage(const cv::Mat &inMat) {
+	switch (inMat.type())
+	{
+		// 8-bit, 4 channel
+	case CV_8UC4:
+	{
+		QImage image(inMat.data,
+			inMat.cols, inMat.rows,
+			static_cast<int>(inMat.step),
+			QImage::Format_ARGB32);
+
+		return image;
+	}
+
+	// 8-bit, 3 channel
+	case CV_8UC3:
+	{
+		QImage image(inMat.data,
+			inMat.cols, inMat.rows,
+			static_cast<int>(inMat.step),
+			QImage::Format_RGB888);
+
+		return image.rgbSwapped();
+	}
+
+	// 8-bit, 1 channel
+	case CV_8UC1:
+	{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
+		QImage image(inMat.data,
+			inMat.cols, inMat.rows,
+			static_cast<int>(inMat.step),
+			QImage::Format_Grayscale8);
+#else
+		static QVector<QRgb>  sColorTable;
+
+		// only create our color table the first time
+		if (sColorTable.isEmpty())
+		{
+			sColorTable.resize(256);
+
+			for (int i = 0; i < 256; ++i)
+			{
+				sColorTable[i] = qRgb(i, i, i);
+			}
+		}
+
+		QImage image(inMat.data,
+			inMat.cols, inMat.rows,
+			static_cast<int>(inMat.step),
+			QImage::Format_Indexed8);
+
+		image.setColorTable(sColorTable);
+#endif
+
+		return image;
+	}
+
+	default:
+		qWarning() << "ASM::cvMatToQImage() - cv::Mat image type not handled in switch:" << inMat.type();
+		break;
+	}
+
+	return QImage();
 }
