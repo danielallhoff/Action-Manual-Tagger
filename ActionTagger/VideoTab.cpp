@@ -5,13 +5,12 @@ VideoTab::VideoTab(QWidget *parent)
 	: TabWidget(parent)
 {
 	QVBoxLayout *main_layout = new QVBoxLayout;
-    QLabel *movieLabel = new QLabel(tr("No video loaded"));
-   
-    main_layout->addWidget(movieLabel);
+    image_viewer = new QLabel(tr("No video loaded"));	    
+	main_layout->addWidget(image_viewer);
 	main_layout->addStretch(1);
 	setLayout(main_layout);
     
-    connect(this, SIGNAL(frameChanged(int)), this, SLOT(frameChanging(int)));
+    //connect(this, SIGNAL(frameChanged(int)), this, SLOT(frameChanging(int)));
 
 };
 
@@ -33,7 +32,6 @@ void VideoTab::playImages() {
 		frame = 0;
 	}
 	while (isPlaying && frame < totalFrames) {
-		
 		this->image_viewer->setPixmap(images[frame]);
 		//34 milliseconds each frame
 		Sleep(34);
@@ -54,27 +52,32 @@ void VideoTab::setFrame(int frame) {
 	if (frame >= 0 && frame <= totalFrames) {
 		qDebug() << "Frame changed" << endl;
 		emit frameChanged(frame);
-		cap.set(cv::CAP_PROP_POS_FRAMES, frame);
+		this->frame = frame;
+		this->image_viewer->setPixmap(images[frame]);		
 	}
 }
 void VideoTab::openFiles(QStringList url) {
-	cap = VideoCapture(url[0].toStdString());
+	cv::VideoCapture cap = cv::VideoCapture(url[0].toStdString());
 	totalFrames = cap.get(cv::CAP_PROP_FRAME_COUNT);
 	images.resize(totalFrames);
 	frame = 0;
+	image_viewer->setText("Loading...");
 	for (;;) {
-		Mat cvframe;
+		cv::Mat cvframe;
 		cap >> cvframe;
 		if (cvframe.empty())
 			break;
-		QPixmap img = cvMatToQPixmap(cvframe);
+		cv::Mat cvframe_resized;
+		cv::resize(cvframe, cvframe_resized, cv::Size(IMG_WIDTH, IMG_HEIGHT), cv::INTER_AREA);
+		QPixmap img = cvMatToQPixmap(cvframe_resized);
 		images[frame] = img;
 		++frame;
 	}
+	setFrame(0);
 }
 
 QImage VideoTab::cvMatToQIMage(const cv::Mat &inMat) {
-	switch (inMat.type())
+	/*switch (inMat.type())
 	{
 		// 8-bit, 4 channel
 	case CV_8UC4:
@@ -135,6 +138,7 @@ QImage VideoTab::cvMatToQIMage(const cv::Mat &inMat) {
 		qWarning() << "ASM::cvMatToQImage() - cv::Mat image type not handled in switch:" << inMat.type();
 		break;
 	}
-
-	return QImage();
+	*/
+	QImage imgIn = QImage((uchar*)inMat.data, inMat.cols, inMat.rows, inMat.step, QImage::Format_RGB888);
+	return imgIn;
 }

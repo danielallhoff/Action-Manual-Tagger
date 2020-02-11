@@ -77,7 +77,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1334, 953);
+        MainWindow->resize(1334, 855);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -105,6 +105,8 @@ public:
         verticalLayout_8->setSizeConstraint(QLayout::SetMaximumSize);
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setMaximumSize(QSize(600, 400));
+        tabWidget->setMovable(true);
 
         verticalLayout_8->addWidget(tabWidget);
 
@@ -683,7 +685,7 @@ public:
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(listIntervals->sizePolicy().hasHeightForWidth());
         listIntervals->setSizePolicy(sizePolicy3);
-        listIntervals->setMinimumSize(QSize(0, 500));
+        listIntervals->setMinimumSize(QSize(0, 350));
         listIntervals->setContextMenuPolicy(Qt::NoContextMenu);
         listIntervals->setAutoFillBackground(false);
         listIntervals->setFrameShape(QFrame::NoFrame);

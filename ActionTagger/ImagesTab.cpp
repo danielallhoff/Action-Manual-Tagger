@@ -58,5 +58,4 @@ void ImagesTab::setFrame(int frame) {
 void ImagesTab::openFiles(QStringList url) {
 	this->images = url;
     setFrame(0);
-	
 }

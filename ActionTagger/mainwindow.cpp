@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     lastBehaviour = "";
     lastAction = "";
     int lastFrame = -1;
-
+	//ui->tabWidget->setAlignment(Qt::AlignHCenter);
+	ui->verticalLayout_8->setAlignment(Qt::AlignHCenter);
     id = 0;
     //Clear default tabs
     ui->tabWidget->clear();
@@ -34,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     TabWidget* VHDLTabWidget = new VHDLTab();
     ImagesTab* ImagesTabWidget = new ImagesTab();
     VideoTab* VideoTabWidget = new VideoTab();
+	currentTab = VHDLTabWidget;
     connect(VHDLTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     connect(ImagesTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     connect(VideoTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
@@ -212,16 +214,19 @@ void MainWindow::modifyFrameSlider(){
 	
     //Convert to frame number
 	frameValue = (totalFrames * frameValue)/totalFrames*1.0;
+	
 	currentTab->setFrame(frameValue);
-	/*lastFrame = 
+	/*lastFrame =
 	totalFrames = lastFrame + 1;
 	std::cout << lastFrame << endl;*/
 	if (lastFrame > 0) {
 		ui->frameSlider->setMaximum(totalFrames - 1);
 	}
+
+
+	action_firstFrame = frameValue;
 	
 	
-    action_firstFrame = frameValue;
 
 }
 

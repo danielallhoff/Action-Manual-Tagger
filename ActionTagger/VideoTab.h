@@ -24,8 +24,8 @@
 #include "TabWidget.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2\highgui\highgui.hpp> 
+#include "opencv2/imgproc/imgproc.hpp"
 
-using namespace cv;
 class VideoTab : public TabWidget
 {
 	Q_OBJECT
@@ -47,9 +47,10 @@ signals:
 private:
 //	QMovie *player;
 	QLabel *image_viewer;
-	VideoCapture cap;
+	const int IMG_WIDTH = 480;
+	const int IMG_HEIGHT = 360;
 	int totalFrames = -1;
-	int frame = -1;
+	int frame = 0;
 	bool isPlaying = false;
 	void playImages();
 	std::vector<QPixmap> images;
