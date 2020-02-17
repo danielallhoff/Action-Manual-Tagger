@@ -9,7 +9,7 @@ CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent)
 CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int initFrame) {
     vertical = new QVBoxLayout();
     horizontal = new QHBoxLayout();
-    scroller = new QSlider(Qt::Horizontal, 0);
+    scroller = new MyQSlider(Qt::Horizontal, 0);
     father = new QLabel();
     idLabel = new QLabel();
     drop_down_father = new QComboBox();
@@ -30,7 +30,7 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
 
     scroller->setStyleSheet(QString("QSlider::handle:horizontal {background-color: %1;}").arg(color->name()));
     scroller->setValue(initFrame);
-
+	
     alignButton->setText("Align");
     alignButton->setFixedWidth(50);
 
@@ -48,6 +48,7 @@ CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int init
 	horizontal->addWidget(scroller);
 	horizontal->addWidget(alignButton);
 	horizontal->addWidget(idLabel);
+	
 	QWidget *horizontal_widget = new QWidget;
 	horizontal_widget->setLayout(horizontal);
     vertical->addWidget(horizontal_widget);
@@ -112,7 +113,8 @@ void CustomWidget::setId(int id){
 
 void CustomWidget::addWidgetVertical(QWidget* widget){
 	vertical->addWidget(widget);
-    vertical->setSizeConstraint(QLayout::SetMinimumSize);
+	
+	
 }
 
 void CustomWidget::setInput(QString input){

@@ -20,11 +20,12 @@ CustomWidgetSubaction::CustomWidgetSubaction(QSet<QString> behaviours, Type type
     horizontal->addWidget(spacing_widget);
 	horizontal->addWidget(scrollerLast);
 	horizontal->addWidget(alignButtonLast);
+	
     QWidget *horizontal_widget = new QWidget;
     horizontal_widget->setLayout(horizontal);
 
     addWidgetVertical(horizontal_widget);
-    this->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     connect(scrollerLast,SIGNAL(valueChanged(int)), (CustomWidget*)this, SLOT(changed()));
     connect(alignButtonLast, SIGNAL(clicked()), this, SLOT(update_last()));
 }

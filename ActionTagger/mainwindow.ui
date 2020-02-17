@@ -28,6 +28,19 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_9">
     <item>
+     <widget class="QPushButton" name="open">
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,10,0">
       <property name="spacing">
        <number>15</number>
@@ -122,10 +135,51 @@
            <enum>QLayout::SetMaximumSize</enum>
           </property>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,1">
+           <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,1">
             <property name="sizeConstraint">
              <enum>QLayout::SetMaximumSize</enum>
             </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,1">
+              <property name="leftMargin">
+               <number>50</number>
+              </property>
+              <property name="rightMargin">
+               <number>50</number>
+              </property>
+              <item>
+               <widget class="QLineEdit" name="new_value"/>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="new_behaviour">
+                  <property name="text">
+                   <string>New Behaviour</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="new_action">
+                  <property name="text">
+                   <string>New Action</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="new_subaction">
+                  <property name="text">
+                   <string>New Subaction</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout">
               <property name="spacing">
@@ -2844,7 +2898,7 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,2,0,0">
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
               <property name="spacing">
                <number>10</number>
               </property>
@@ -2855,47 +2909,12 @@
                <number>50</number>
               </property>
               <item>
-               <widget class="QPushButton" name="open">
-                <property name="text">
-                 <string>Open</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="new_value"/>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_2">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QPushButton" name="new_behaviour">
-                  <property name="text">
-                   <string>New Behaviour</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="new_action">
-                  <property name="text">
-                   <string>New Action</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="new_subaction">
-                  <property name="text">
-                   <string>New Subaction</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
                  <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>50</number>
                 </property>
                 <item>
                  <widget class="QPushButton" name="add_behaviour">
@@ -2934,10 +2953,10 @@
          <enum>QLayout::SetMaximumSize</enum>
         </property>
         <property name="leftMargin">
-         <number>95</number>
+         <number>65</number>
         </property>
         <property name="rightMargin">
-         <number>72</number>
+         <number>40</number>
         </property>
         <item>
          <widget class="QLabel" name="startLabel">
@@ -2994,6 +3013,13 @@
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QListWidget::item:hover,
+QListWidget::item:disabled:hover,
+QListWidget::item:hover:!active,
+{background: transparent;}
+</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -3010,10 +3036,13 @@
          <enum>QListView::SinglePass</enum>
         </property>
         <property name="spacing">
-         <number>30</number>
+         <number>0</number>
         </property>
         <property name="viewMode">
          <enum>QListView::ListMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>false</bool>
         </property>
         <property name="selectionRectVisible">
          <bool>false</bool>

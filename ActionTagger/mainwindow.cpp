@@ -151,6 +151,7 @@ void MainWindow::open_files() {
 		QString fileNames_filters = "Images (*.png *.xpm *.jpg *.jpeg";
 		QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select multiple images"), QDir::homePath(), fileNames_filters);
 		if (!fileNames.isEmpty()) {
+			fileNames.sort();
 			this->filenames = fileNames;
 			currentTab->openFiles(filenames);
 			totalFrames = currentTab->getTotalFrames();
@@ -367,7 +368,7 @@ void MainWindow::add_new(QString action_string, Type type){
  */
 void MainWindow::add_itemWidget(Type type){
     QListWidgetItem *newItem = new QListWidgetItem();
-
+	
     CustomWidget *widget;
     Interval *newInterval;
 
@@ -398,7 +399,7 @@ void MainWindow::add_itemWidget(Type type){
 
             newInterval = new Interval("null", 0, subaction_lastFrame, type, nullptr);
             widget = new CustomWidgetSubaction(all_set, type, id,subaction_lastFrame);
-
+			
             break;
 
     }
@@ -410,6 +411,9 @@ void MainWindow::add_itemWidget(Type type){
     ui->listIntervals->insertItem(pos, newItem);
     ui->listIntervals->setItemWidget(newItem,widget);
 
+	newItem->setSizeHint(widget->sizeHint());
+
+	
     intervals.push_back(newInterval);
     ++id;
 }

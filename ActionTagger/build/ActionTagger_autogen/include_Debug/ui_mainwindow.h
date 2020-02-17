@@ -31,6 +31,7 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_9;
+    QPushButton *open;
     QVBoxLayout *verticalLayout_5;
     QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout_8;
@@ -42,6 +43,12 @@ public:
     QPushButton *last;
     QVBoxLayout *verticalLayout_4;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_9;
+    QLineEdit *new_value;
+    QVBoxLayout *verticalLayout_2;
+    QPushButton *new_behaviour;
+    QPushButton *new_action;
+    QPushButton *new_subaction;
     QHBoxLayout *horizontalLayout;
     QListWidget *behaviours_list;
     QListWidget *actions_list;
@@ -51,12 +58,6 @@ public:
     QLabel *label;
     QLabel *Subactions;
     QHBoxLayout *horizontalLayout_3;
-    QPushButton *open;
-    QLineEdit *new_value;
-    QVBoxLayout *verticalLayout_2;
-    QPushButton *new_behaviour;
-    QPushButton *new_action;
-    QPushButton *new_subaction;
     QVBoxLayout *verticalLayout_3;
     QPushButton *add_behaviour;
     QPushButton *add_action;
@@ -92,6 +93,12 @@ public:
         centralwidget->setSizePolicy(sizePolicy1);
         verticalLayout_9 = new QVBoxLayout(centralwidget);
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        open = new QPushButton(centralwidget);
+        open->setObjectName(QString::fromUtf8("open"));
+        open->setMaximumSize(QSize(50, 16777215));
+
+        verticalLayout_9->addWidget(open);
+
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setSpacing(15);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
@@ -150,6 +157,38 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetMaximumSize);
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        new_value = new QLineEdit(centralwidget);
+        new_value->setObjectName(QString::fromUtf8("new_value"));
+
+        horizontalLayout_9->addWidget(new_value);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(0);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        new_behaviour = new QPushButton(centralwidget);
+        new_behaviour->setObjectName(QString::fromUtf8("new_behaviour"));
+
+        verticalLayout_2->addWidget(new_behaviour);
+
+        new_action = new QPushButton(centralwidget);
+        new_action->setObjectName(QString::fromUtf8("new_action"));
+
+        verticalLayout_2->addWidget(new_action);
+
+        new_subaction = new QPushButton(centralwidget);
+        new_subaction->setObjectName(QString::fromUtf8("new_subaction"));
+
+        verticalLayout_2->addWidget(new_subaction);
+
+
+        horizontalLayout_9->addLayout(verticalLayout_2);
+
+        horizontalLayout_9->setStretch(1, 1);
+
+        verticalLayout->addLayout(horizontalLayout_9);
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(30);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -579,37 +618,6 @@ public:
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setSizeConstraint(QLayout::SetMaximumSize);
         horizontalLayout_3->setContentsMargins(50, -1, -1, -1);
-        open = new QPushButton(centralwidget);
-        open->setObjectName(QString::fromUtf8("open"));
-
-        horizontalLayout_3->addWidget(open);
-
-        new_value = new QLineEdit(centralwidget);
-        new_value->setObjectName(QString::fromUtf8("new_value"));
-
-        horizontalLayout_3->addWidget(new_value);
-
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(0);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        new_behaviour = new QPushButton(centralwidget);
-        new_behaviour->setObjectName(QString::fromUtf8("new_behaviour"));
-
-        verticalLayout_2->addWidget(new_behaviour);
-
-        new_action = new QPushButton(centralwidget);
-        new_action->setObjectName(QString::fromUtf8("new_action"));
-
-        verticalLayout_2->addWidget(new_action);
-
-        new_subaction = new QPushButton(centralwidget);
-        new_subaction->setObjectName(QString::fromUtf8("new_subaction"));
-
-        verticalLayout_2->addWidget(new_subaction);
-
-
-        horizontalLayout_3->addLayout(verticalLayout_2);
-
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(0);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -631,12 +639,11 @@ public:
 
         horizontalLayout_3->addLayout(verticalLayout_3);
 
-        horizontalLayout_3->setStretch(1, 2);
 
         verticalLayout->addLayout(horizontalLayout_3);
 
-        verticalLayout->setStretch(0, 1);
-        verticalLayout->setStretch(2, 1);
+        verticalLayout->setStretch(1, 1);
+        verticalLayout->setStretch(3, 1);
 
         verticalLayout_4->addLayout(verticalLayout);
 
@@ -651,7 +658,7 @@ public:
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_6->setSizeConstraint(QLayout::SetMaximumSize);
-        horizontalLayout_6->setContentsMargins(95, -1, 72, -1);
+        horizontalLayout_6->setContentsMargins(65, -1, 40, -1);
         startLabel = new QLabel(centralwidget);
         startLabel->setObjectName(QString::fromUtf8("startLabel"));
 
@@ -688,13 +695,18 @@ public:
         listIntervals->setMinimumSize(QSize(0, 350));
         listIntervals->setContextMenuPolicy(Qt::NoContextMenu);
         listIntervals->setAutoFillBackground(false);
+        listIntervals->setStyleSheet(QString::fromUtf8("QListWidget::item:hover,\n"
+"QListWidget::item:disabled:hover,\n"
+"QListWidget::item:hover:!active,\n"
+"{background: transparent;}"));
         listIntervals->setFrameShape(QFrame::NoFrame);
         listIntervals->setFrameShadow(QFrame::Sunken);
         listIntervals->setProperty("showDropIndicator", QVariant(false));
         listIntervals->setResizeMode(QListView::Adjust);
         listIntervals->setLayoutMode(QListView::SinglePass);
-        listIntervals->setSpacing(30);
+        listIntervals->setSpacing(0);
         listIntervals->setViewMode(QListView::ListMode);
+        listIntervals->setUniformItemSizes(false);
         listIntervals->setSelectionRectVisible(false);
 
         verticalLayout_5->addWidget(listIntervals);
@@ -742,17 +754,17 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        open->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         init->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         play->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
         pause->setText(QCoreApplication::translate("MainWindow", "Pause", nullptr));
         last->setText(QCoreApplication::translate("MainWindow", "End", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Behaviours", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Actions", nullptr));
-        Subactions->setText(QCoreApplication::translate("MainWindow", "Subactions", nullptr));
-        open->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         new_behaviour->setText(QCoreApplication::translate("MainWindow", "New Behaviour", nullptr));
         new_action->setText(QCoreApplication::translate("MainWindow", "New Action", nullptr));
         new_subaction->setText(QCoreApplication::translate("MainWindow", "New Subaction", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Behaviours", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Actions", nullptr));
+        Subactions->setText(QCoreApplication::translate("MainWindow", "Subactions", nullptr));
         add_behaviour->setText(QCoreApplication::translate("MainWindow", "Add Behaviour", nullptr));
         add_action->setText(QCoreApplication::translate("MainWindow", "Add Action", nullptr));
         add_subaction->setText(QCoreApplication::translate("MainWindow", "Add Subaction", nullptr));
