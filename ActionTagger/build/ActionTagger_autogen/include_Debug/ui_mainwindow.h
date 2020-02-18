@@ -159,6 +159,7 @@ public:
         verticalLayout->setSizeConstraint(QLayout::SetMaximumSize);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        horizontalLayout_9->setContentsMargins(50, -1, 50, -1);
         new_value = new QLineEdit(centralwidget);
         new_value->setObjectName(QString::fromUtf8("new_value"));
 
@@ -621,6 +622,7 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(0);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(-1, -1, 50, -1);
         add_behaviour = new QPushButton(centralwidget);
         add_behaviour->setObjectName(QString::fromUtf8("add_behaviour"));
 
@@ -698,7 +700,8 @@ public:
         listIntervals->setStyleSheet(QString::fromUtf8("QListWidget::item:hover,\n"
 "QListWidget::item:disabled:hover,\n"
 "QListWidget::item:hover:!active,\n"
-"{background: transparent;}"));
+"{background: transparent;}\n"
+""));
         listIntervals->setFrameShape(QFrame::NoFrame);
         listIntervals->setFrameShadow(QFrame::Sunken);
         listIntervals->setProperty("showDropIndicator", QVariant(false));

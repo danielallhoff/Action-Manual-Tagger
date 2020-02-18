@@ -15,14 +15,14 @@
 
 #include "ui_mainwindow.h"
 #include "type.h"
-#include "myqslider.h"
+#include "MyQSlider.h"
 class CustomWidget : public QWidget
 {
     Q_OBJECT
 
     QVBoxLayout *vertical;
     QHBoxLayout *horizontal;
-    MyQSlider *scroller;
+	MyQSlider *scroller;
 
     QLabel *action;
     QLabel *father;

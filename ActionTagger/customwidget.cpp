@@ -9,7 +9,7 @@ CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent)
 CustomWidget::CustomWidget(QSet<QString> behaviours, Type type, int id, int initFrame) {
     vertical = new QVBoxLayout();
     horizontal = new QHBoxLayout();
-    scroller = new MyQSlider(Qt::Horizontal, 0);
+    scroller = new MyQSlider(Qt::Horizontal, nullptr);
     father = new QLabel();
     idLabel = new QLabel();
     drop_down_father = new QComboBox();

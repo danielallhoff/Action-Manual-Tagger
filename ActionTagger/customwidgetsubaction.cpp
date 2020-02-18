@@ -2,7 +2,7 @@
 
 CustomWidgetSubaction::CustomWidgetSubaction(QSet<QString> behaviours, Type type, int id, int initFrame) : CustomWidget(behaviours, type, id, initFrame)
 {
-    scrollerLast = new QSlider(Qt::Horizontal, 0);
+    scrollerLast = new MyQSlider(Qt::Horizontal, nullptr);
     alignButtonLast = new QPushButton();
     QColor* color = getColor(type);
     scrollerLast->setStyleSheet(QString("QSlider::handle:horizontal {background-color: %1;}").arg(color->name()));

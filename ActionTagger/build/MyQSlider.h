@@ -1,34 +1,26 @@
-#ifndef QSLIDER_H
-#define QSLIDER_H
-
-#include <QMainWindow>
-#include <vector>
-#include <QDir>
-
-#include <QDir>
-#include<QDebug>
-#include <QtGui>
+#ifndef MYQSLIDER_H
+#define MYQSLIDER_H
 
 #include <QWidget>
-
+#include <QtGui>
+#include <QtWidgets>
+#include <QWidget>
 #include <iostream>
-#include <QSlider>
-#include <fstream>
-#include <iomanip>
-#include <set>
-#include <qdialog.h>
 
-#include <QSlider>
 
 class MyQSlider : public QSlider
 {
 	Q_OBJECT
+public:	
+	explicit MyQSlider(Qt::Orientation axis, QWidget *parent = nullptr) :QSlider(axis, parent) { };
+	explicit MyQSlider() :QSlider() {};
+	
+	void installFilter() { this->installEventFilter(this); };
+protected:
+	void wheelEvent(QWheelEvent *event) { event->ignore(); };
+	bool eventFilter(QObject *obj, QEvent *event);
 
-public:
-	MyQSlider(QWidget *parent = nullptr);
-	void wheelEvent(QWheelEvent *event) override { event.ignore(); }
-signals:
-	void frameChanged(int);
+	
 };
 
 #endif

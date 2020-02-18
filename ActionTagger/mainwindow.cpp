@@ -9,24 +9,27 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+	: QMainWindow(parent)
+	, ui(new Ui::MainWindow)
 {
 
-    ui->setupUi(this);
+	ui->setupUi(this);
 
-    firstFrame= 0;
-    lastFrame = 9;
-    totalFrames = 10;
-    action_firstFrame = 0;
-    action_lastFrame = 10;
-    behaviour_lastFrame = 0;
+	firstFrame = 0;
+	lastFrame = 9;
+	totalFrames = 10;
+	action_firstFrame = 0;
+	action_lastFrame = 10;
+	behaviour_lastFrame = 0;
 
-    lastBehaviour = "";
-    lastAction = "";
-    int lastFrame = -1;
+	lastBehaviour = "";
+	lastAction = "";
+	int lastFrame = -1;
 	//ui->tabWidget->setAlignment(Qt::AlignHCenter);
 	ui->verticalLayout_8->setAlignment(Qt::AlignHCenter);
+
+	ui->listIntervals->setStyleSheet("*:hover{ background: transparent; }");
+
     id = 0;
     //Clear default tabs
     ui->tabWidget->clear();
