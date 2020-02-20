@@ -707,7 +707,7 @@ def read_message(data):
     return slidert.get()
   elif command == 'init':
     slidert.set(1)
-  elif command = 'end':
+  elif command == 'end':
     slidert.set(myskeleton.getFrames())
 
 #Server who receives data

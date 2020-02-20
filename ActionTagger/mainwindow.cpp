@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(VHDLTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     connect(ImagesTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     connect(VideoTabWidget, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+	connect(VHDLTabWidget, SIGNAL(updateTotalFrames(int)), this, SLOT(updateTotalFrames(int)));
     ui->tabWidget->addTab(VHDLTabWidget, tr("VHDL"));
     ui->tabWidget->addTab(ImagesTabWidget, tr("Images"));
     ui->tabWidget->addTab( VideoTabWidget, tr("Videos"));
@@ -97,6 +98,14 @@ void MainWindow::frameChanged(int frame){
     }
 
     ui->frameSlider->setValue(frame);
+}
+
+void MainWindow::updateTotalFrames(int frame){
+
+	totalFrames = frame;
+	lastFrame = totalFrames - 1;
+
+    ui->frameSlider->setValue(frame);
 
 }
 
@@ -147,6 +156,7 @@ void MainWindow::open_files() {
 		QMessageBox::warning(this, tr("Manual Tagger"),
 			tr("Cannot open vhdl files, open external interface bvhsource!"),
 			QMessageBox::Cancel);
+		
 	}
 
 	//Images TAB

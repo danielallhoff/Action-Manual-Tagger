@@ -56,6 +56,7 @@ private slots:
 	void play();
 	void pause();
     void frameChanged(int);
+	void updateTotalFrames(int);
 private:
 	
 	TabWidget *currentTab;

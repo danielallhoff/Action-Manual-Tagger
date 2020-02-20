@@ -12,8 +12,8 @@ class MyQSlider : public QSlider
 {
 	Q_OBJECT
 public:	
-	explicit MyQSlider(Qt::Orientation axis, QWidget *parent = nullptr) :QSlider(axis, parent) { };
-	explicit MyQSlider() :QSlider() {};
+	MyQSlider(Qt::Orientation axis, QWidget *parent = nullptr) :QSlider(axis, parent) { };
+	MyQSlider() :QSlider() {};
 	
 	void installFilter() { this->installEventFilter(this); };
 protected:

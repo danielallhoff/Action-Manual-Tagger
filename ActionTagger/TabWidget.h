@@ -42,6 +42,7 @@ public:
 
 signals:
     void frameChanged(int);
+	void updateTotalFrames(int);
 };
 
 #endif

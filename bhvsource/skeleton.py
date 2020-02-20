@@ -132,7 +132,7 @@ class joint:
 #   dt: delta-t in seconds per frame (default: 30fps i.e. 1/30)
 class skeleton:
 
-  def getFrames(): return frames
+  def getFrames(self): return self.frames
   def __init__(self, hips, keyframes, frames=0, dt=.033333333):
     self.hips = hips
 # 9/1/08: we now transfer the large bvh.keyframes data structure to

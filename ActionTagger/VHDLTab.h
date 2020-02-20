@@ -27,7 +27,7 @@ class VHDLTab : public TabWidget
 
 public:
     explicit VHDLTab(QWidget *parent = nullptr);
-
+	void checkTotalFrames();
 	void init();
 	void last();
 	void pause();
@@ -38,6 +38,7 @@ public:
 
 signals:
     void frameChanged(int);
+	void updateTotalFrames(int);
 private:
 	int totalFrames = -1;
 
