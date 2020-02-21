@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	firstFrame = 0;
 	lastFrame = 9;
-	totalFrames = 10;
+	totalFrames = 0;
 	action_firstFrame = 0;
 	action_lastFrame = 10;
 	behaviour_lastFrame = 0;
@@ -223,25 +223,24 @@ void MainWindow::create_json(){
  * @brief MainWindow::modifyFrameSlider
  */
 void MainWindow::modifyFrameSlider(){
+	if (totalFrames != 0) {
+		int frameValue = ui->frameSlider->value();
 
-    int frameValue = ui->frameSlider->value();
-	
-    //Convert to frame number
-	frameValue = (totalFrames * frameValue)/totalFrames*1.0;
-	
-	currentTab->setFrame(frameValue);
-	/*lastFrame =
-	totalFrames = lastFrame + 1;
-	std::cout << lastFrame << endl;*/
-	if (lastFrame > 0) {
-		ui->frameSlider->setMaximum(totalFrames - 1);
+		//Convert to frame number
+		frameValue = (totalFrames * frameValue) / totalFrames * 1.0;
+
+		currentTab->setFrame(frameValue);
+		/*lastFrame =
+		totalFrames = lastFrame + 1;
+		std::cout << lastFrame << endl;*/
+		if (lastFrame > 0) {
+			ui->frameSlider->setMaximum(totalFrames - 1);
+		}
+
+
+		action_firstFrame = frameValue;
 	}
-
-
-	action_firstFrame = frameValue;
-	
-	
-
+    
 }
 
 

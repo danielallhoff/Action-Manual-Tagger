@@ -16,7 +16,9 @@ void VHDLTab::last() {
 }
 void VHDLTab::pause() {
 	std::thread client_thread(&BHVClient::sendMessage, "stop");
-	client_thread.detach();
+	client_thread.join();
+	int frames = std::stoi(BHVClient::getResult());
+	emit frameChanged(frames);
 }
 void VHDLTab::play() {
 	std::thread client_thread(&BHVClient::sendMessage, "play");
@@ -29,6 +31,12 @@ void VHDLTab::checkTotalFrames() {
 		emit updateTotalFrames(totalFrames);
 	}
 	
+}
+
+bool VHDLTab::checkErrors(std::string error) {
+	if (error == "skeleton empty") {
+
+	}
 }
 
 int VHDLTab::getTotalFrames() {

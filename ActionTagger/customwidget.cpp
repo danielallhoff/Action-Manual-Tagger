@@ -113,8 +113,6 @@ void CustomWidget::setId(int id){
 
 void CustomWidget::addWidgetVertical(QWidget* widget){
 	vertical->addWidget(widget);
-	
-	
 }
 
 void CustomWidget::setInput(QString input){

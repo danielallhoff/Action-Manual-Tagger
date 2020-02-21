@@ -22,6 +22,7 @@ CustomWidgetSubaction::CustomWidgetSubaction(QSet<QString> behaviours, Type type
 	horizontal->addWidget(alignButtonLast);
 	
     QWidget *horizontal_widget = new QWidget;
+	
     horizontal_widget->setLayout(horizontal);
 
     addWidgetVertical(horizontal_widget);

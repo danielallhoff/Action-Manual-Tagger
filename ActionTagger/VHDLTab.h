@@ -35,7 +35,7 @@ public:
 	void setFrame(int frame);
     int getTotalFrames();
     void openFiles(QStringList url){}
-
+	bool checkErrors(std::string);
 signals:
     void frameChanged(int);
 	void updateTotalFrames(int);
