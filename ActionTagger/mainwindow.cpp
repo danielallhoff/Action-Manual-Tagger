@@ -161,7 +161,7 @@ void MainWindow::open_files() {
 
 	//Images TAB
 	if (ui->tabWidget->currentIndex() == 1) {
-		QString fileNames_filters = "Images (*.png *.xpm *.jpg *.jpeg";
+		QString fileNames_filters = "Images (*.png *.xpm *.jpg *.jpeg)";
 		QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Select multiple images"), QDir::homePath(), fileNames_filters);
 		if (!fileNames.isEmpty()) {
 			fileNames.sort();
@@ -464,7 +464,7 @@ void MainWindow::save_to_JSON(QString name){
 
         //Use as id for each behaviour in json file
         std::map<std::string, int> getId;
-
+		std::vector<std::string> getName;
         int id = 0;
 
         for(std::string s: behaviours){
@@ -480,6 +480,7 @@ void MainWindow::save_to_JSON(QString name){
 
         for(std::string s: all){
             getId[s] = id;
+			getName.push_back(s);
             ++id;
         }
 
@@ -522,6 +523,8 @@ void MainWindow::save_to_JSON(QString name){
 
             }
         }
+		
+		j["all"] = getName;
         //Assign to json
         j["name"] = name.toStdString();
         j["frames"] = totalFrames;

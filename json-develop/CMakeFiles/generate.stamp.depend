@@ -1,0 +1,12 @@
+# CMake generation dependency list for this directory.
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/ActionTagger/json-develop/CMakeLists.txt
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/ActionTagger/json-develop/cmake/config.cmake.in
+E:/cmake/share/cmake-3.16/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+E:/cmake/share/cmake-3.16/Modules/CMakePackageConfigHelpers.cmake
+E:/cmake/share/cmake-3.16/Modules/CTest.cmake
+E:/cmake/share/cmake-3.16/Modules/CTestTargets.cmake
+E:/cmake/share/cmake-3.16/Modules/CTestUseLaunchers.cmake
+E:/cmake/share/cmake-3.16/Modules/DartConfiguration.tcl.in
+E:/cmake/share/cmake-3.16/Modules/ExternalProject.cmake
+E:/cmake/share/cmake-3.16/Modules/GNUInstallDirs.cmake
+E:/cmake/share/cmake-3.16/Modules/WriteBasicConfigVersionFile.cmake

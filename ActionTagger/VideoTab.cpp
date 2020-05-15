@@ -18,13 +18,6 @@ void VideoTab::frameChanging(int frame){
     emit frameChanged(frame);
 }
 
-void VideoTab::init() {
-	this->setFrame(0);
-}
-
-void VideoTab::last() {
-	this->setFrame(totalFrames-1);
-}
 
 //Play images with 30 fps
 void VideoTab::playImages() {
@@ -33,21 +26,30 @@ void VideoTab::playImages() {
 	}
 	while (isPlaying && frame < totalFrames) {
 		this->image_viewer->setPixmap(images[frame]);
-		//34 milliseconds each frame
 		Sleep(34);
 		emit frameChanged(frame);
 		++frame;
 	}
 }
 
-void VideoTab::pause() {
-	isPlaying = false;
-}
 void VideoTab::play() {
 	isPlaying = true;
 	std::thread player_thread(&VideoTab::playImages, this);
 	player_thread.detach();
 }
+
+void VideoTab::pause() {
+	isPlaying = false;
+}
+
+void VideoTab::init() {
+	this->setFrame(0);
+}
+
+void VideoTab::last() {
+	this->setFrame(totalFrames - 1);
+}
+
 void VideoTab::setFrame(int frame) {
 	if (frame >= 0 && frame <= totalFrames) {
 		qDebug() << "Frame changed" << endl;

@@ -37,6 +37,7 @@ bool VHDLTab::checkErrors(std::string error) {
 	if (error == "skeleton empty") {
 
 	}
+	return true;
 }
 
 int VHDLTab::getTotalFrames() {

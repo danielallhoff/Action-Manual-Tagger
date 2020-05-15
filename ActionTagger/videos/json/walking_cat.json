@@ -1,0 +1,100 @@
+{
+    "actions": [
+        "move_left_foot",
+        "move_right_foot"
+    ],
+    "all": [
+        "move_left_foot",
+        "move_right_foot",
+        "walking"
+    ],
+    "behaviours": [
+        "walking"
+    ],
+    "frames": 15,
+    "name": "walking_cat",
+    "sequence": {
+        "actions": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            -1,
+            -1,
+            -1
+        ],
+        "behaviours": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+        ],
+        "subactions": [
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ],
+            [
+                -1
+            ]
+        ]
+    },
+    "subactions": []
+}

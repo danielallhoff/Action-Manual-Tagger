@@ -15,7 +15,8 @@
 #include <QGroupBox>
 #include <QSizePolicy>
 #include <iostream>
-#include <nlohmann/json.hpp>
+
+#include "json-develop/single_include/nlohmann/json.hpp"
 #include <fstream>
 #include <iomanip>
 #include <set>

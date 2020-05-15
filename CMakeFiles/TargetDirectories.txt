@@ -1,0 +1,10 @@
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/CMakeFiles/ActionTagger.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/CMakeFiles/INSTALL.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/CMakeFiles/ALL_BUILD.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/NightlyMemoryCheck.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/Experimental.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/Continuous.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/Nightly.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/INSTALL.dir
+C:/Users/Daniel/Desktop/Action-Manual-Tagger/json-develop/CMakeFiles/ALL_BUILD.dir

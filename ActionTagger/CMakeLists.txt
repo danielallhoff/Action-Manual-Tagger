@@ -13,9 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 #Find opencv
-find_package( OpenCV REQUIRED )
+find_package(OpenCV REQUIRED)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5Widgets)
 find_package(Qt5Multimedia REQUIRED)
 add_subdirectory(json-develop)
 
@@ -41,10 +42,10 @@ add_executable(ActionTagger
   VideoTab.h
   BHVClient.cpp
   BHVClient.h
-  MyQslider.h
-  MyQslider.cpp
+  MyQSlider.h
+  MyQSlider.cpp
 )
 
 #add_library(ActionTagger ...)
 
-target_link_libraries(ActionTagger PRIVATE Qt5::Widgets nlohmann_json::nlohmann_json Qt5::Multimedia ${OpenCV_LIBS})
+target_link_libraries(ActionTagger PRIVATE Qt5::Widgets nlohmann_json::nlohmann_json  ${OpenCV_LIBS})

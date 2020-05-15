@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Daniel\Desktop\Action-Manual-Tagger\CMakeFiles\f5d1000ce75a35eec33aaa148c1b28c6\Nightly.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Daniel\Desktop\Action-Manual-Tagger\ActionTagger\json-develop\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Daniel\Desktop\Action-Manual-Tagger\json-develop\CMakeFiles\Nightly" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E34CC853-4652-3D25-BBA7-F80A23888265}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -13,7 +13,7 @@
 #include <QSizePolicy>
 #include <iostream>
 
-#include "ui_mainwindow.h"
+
 #include "type.h"
 #include "MyQSlider.h"
 class CustomWidget : public QWidget

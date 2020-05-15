@@ -113,7 +113,8 @@ HEADERS += BHVClient.h \
            /json-develop/test/thirdparty/Fuzzer/FuzzerDictionary.h \
            /json-develop/test/thirdparty/Fuzzer/FuzzerMerge.h \
            /json-develop/test/thirdparty/Fuzzer/FuzzerMutate.h \
-           /json-develop/test/thirdparty/Fuzzer/FuzzerRandom.h
+           /json-develop/test/thirdparty/Fuzzer/FuzzerRandom.h \
+           ui_mainwindow.h
 FORMS += mainwindow.ui
 SOURCES += BHVClient.cpp \
            customwidget.cpp \
@@ -412,6 +413,8 @@ SOURCES += BHVClient.cpp \
            json-develop/test/thirdparty/Fuzzer/test/UninstrumentedTest.cpp
 
 INCLUDEPATH += E:\opencv\build\include
+INCLUDEPATH += E:\qt5\5.12.6\Src\qtbase\include\QtWidgets
+
 
 LIBS += E:\opencv-build\bin\libopencv_core320.dll
 LIBS += E:\opencv-build\bin\libopencv_highgui320.dll
