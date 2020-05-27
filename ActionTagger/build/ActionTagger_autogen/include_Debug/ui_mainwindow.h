@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.13.2
+** Created by: Qt User Interface Compiler version 5.12.6
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -756,25 +756,25 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        open->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
-        init->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
-        play->setText(QCoreApplication::translate("MainWindow", "Play", nullptr));
-        pause->setText(QCoreApplication::translate("MainWindow", "Pause", nullptr));
-        last->setText(QCoreApplication::translate("MainWindow", "End", nullptr));
-        new_behaviour->setText(QCoreApplication::translate("MainWindow", "New Behaviour", nullptr));
-        new_action->setText(QCoreApplication::translate("MainWindow", "New Action", nullptr));
-        new_subaction->setText(QCoreApplication::translate("MainWindow", "New Subaction", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Behaviours", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Actions", nullptr));
-        Subactions->setText(QCoreApplication::translate("MainWindow", "Subactions", nullptr));
-        add_behaviour->setText(QCoreApplication::translate("MainWindow", "Add Behaviour", nullptr));
-        add_action->setText(QCoreApplication::translate("MainWindow", "Add Action", nullptr));
-        add_subaction->setText(QCoreApplication::translate("MainWindow", "Add Subaction", nullptr));
-        startLabel->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
-        endLabel->setText(QCoreApplication::translate("MainWindow", "End", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "Filename: ", nullptr));
-        finish_tagging->setText(QCoreApplication::translate("MainWindow", "Finish", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        open->setText(QApplication::translate("MainWindow", "Open", nullptr));
+        init->setText(QApplication::translate("MainWindow", "Start", nullptr));
+        play->setText(QApplication::translate("MainWindow", "Play", nullptr));
+        pause->setText(QApplication::translate("MainWindow", "Pause", nullptr));
+        last->setText(QApplication::translate("MainWindow", "End", nullptr));
+        new_behaviour->setText(QApplication::translate("MainWindow", "New Behaviour", nullptr));
+        new_action->setText(QApplication::translate("MainWindow", "New Action", nullptr));
+        new_subaction->setText(QApplication::translate("MainWindow", "New Subaction", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Behaviours", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Actions", nullptr));
+        Subactions->setText(QApplication::translate("MainWindow", "Subactions", nullptr));
+        add_behaviour->setText(QApplication::translate("MainWindow", "Add Behaviour", nullptr));
+        add_action->setText(QApplication::translate("MainWindow", "Add Action", nullptr));
+        add_subaction->setText(QApplication::translate("MainWindow", "Add Subaction", nullptr));
+        startLabel->setText(QApplication::translate("MainWindow", "Start", nullptr));
+        endLabel->setText(QApplication::translate("MainWindow", "End", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Filename: ", nullptr));
+        finish_tagging->setText(QApplication::translate("MainWindow", "Finish", nullptr));
     } // retranslateUi
 
 };
