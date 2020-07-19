@@ -13,7 +13,6 @@ There are a maximum of three action tagging levels, meaning that the tool can cr
 ## Demo of the tool
 [![Watch the video](https://img.youtube.com/vi/6sgwJqkNpR4/0.jpg)](https://youtu.be/6sgwJqkNpR4)
 
-## Install
 
 # Video Data Augmentation
 When we are dealing with Deep learning, it is interesting to have a big amount of diverse data. If the data lacks of variability, the training process would be difficult to succeed. Data augmentation is one of the best techniques to improve data by incorporating variation. We propose an extension of the Action Manual Tagger which returns augmented data. 
