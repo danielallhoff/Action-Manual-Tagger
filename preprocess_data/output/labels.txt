@@ -1,8 +1,0 @@
-move_forwad 2
-hit 0
-none 3
-walking 7
-move_right_foot 6
-playing_golf 4
-move_left_foot 5
-move_back 1

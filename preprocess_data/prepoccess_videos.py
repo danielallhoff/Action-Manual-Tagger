@@ -5,7 +5,7 @@ import sys
 import random
 import os
 class VideoDataAugmentation:
-    def __init__(self, videos= None, labels = None, angle=15, scale=1.0, frames_variation_prob=0.7,frames_variation_add =2.0,brightness_variation=45, crop_pixels=20, trans_range = 5):
+    def __init__(self, videos= None, labels = None, angle=15, scale=1.0, frames_variation_prob=0.3,frames_variation_add =2.0,brightness_variation=200, crop_pixels=20, trans_range = 100):
         self.angle = angle
         self.videos = videos
         self.video = None
@@ -20,9 +20,10 @@ class VideoDataAugmentation:
         self.crop_pixels = crop_pixels
         self.trans_range = trans_range
         
-        self.OPERATIONS_PROB = 0.1
+        self.OPERATIONS_PROB = 1
         self.FRAMES_DUPLICATE_PROB = frames_variation_prob
         self.FRAMES_DUPLICATED = frames_variation_add
+        self.BRIGHTNESS_VARIATION = brightness_variation
     #Rotate frames of video
     def rotate(self):
         rotation = random.randint(-self.angle, self.angle)
@@ -40,7 +41,6 @@ class VideoDataAugmentation:
         Trans_M = np.float32([[1,0,tr_x],[0,1,tr_y]])
         new_video = []
         for image in self.video:
-            
             image = cv2.warpAffine(image, Trans_M, (self.cols, self.rows))
             new_video.append(image)
         self.video = new_video
@@ -78,18 +78,19 @@ class VideoDataAugmentation:
         new_video = self.video
         new_labels = self.labels
         finished = False
+        #Probabilities per frame to duplicate
         frames = [random.uniform(0,1) for _ in xrange(len(new_video))]        
         i = 0
         j = 0
         while not finished:            
             if frames[j] < self.FRAMES_DUPLICATE_PROB:
-                new_frames = random.randint(0, self.FRAMES_DUPLICATED)
-                              
+                new_frames = random.randint(0, self.FRAMES_DUPLICATED)                              
                 j += 1
                 for frame in xrange(new_frames):
                     new_video.insert(i,new_video[i])
                     i+=1
             else:
+                j+=1
                 i+=1
             if(i >= len(new_video) or j >= len(frames)):
                 finished = True
@@ -98,7 +99,7 @@ class VideoDataAugmentation:
         
     def change_brightness(self):
         new_video = []
-        value_brightness = random.randint(-100,+100)
+        value_brightness = random.randint(-self.BRIGHTNESS_VARIATION,+self.BRIGHTNESS_VARIATION)
         for image in self.video:
             hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             h,s,v = cv2.split(hsv)
@@ -107,8 +108,6 @@ class VideoDataAugmentation:
             v[v<0] = 0
             final_hsv = cv2.merge((h,s,v))
             image = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
-            '''cv2.add(hsv[:,:,2], value_brightness, hsv[:,:,2])
-            image = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)'''
             new_video.append(image)
         self.video = new_video
         pass
@@ -118,14 +117,17 @@ class VideoDataAugmentation:
             gauss = np.random.normal(0,1, (self.rows,self.cols,self.depth))
             gauss = gauss.reshape(self.rows,self.cols,self.depth).astype('uint8') 
             image = image + gauss       
-            #image = cv2.add(image, gauss)
             new_video.append(image)
         self.video = new_video
 
     def add_blur(self):
         new_video = []
+        
+        values = [3,5,7,9,11]
+        i = random.randint(0,len(values)-1)
+        value_blur = (values[i],values[i])
         for image in self.video:
-            image = cv2.GaussianBlur(image, (5,5),0)
+            image = cv2.GaussianBlur(image, value_blur,0)
             new_video.append(image)
         self.video = new_video
 
@@ -135,7 +137,7 @@ class VideoDataAugmentation:
         new_videos = []
         new_labels = []
         
-        functions = [self.add_noise,self.rotate, self.flip_horizontal ,self.change_brightness,self.crop,self.translate, self.add_blur,self.duplicate_frames]#,  self.flip_horizontal, self.crop, self.duplicate_frames, self.change_brightness,self.add_noise,self.add_blur]
+        functions = [self.add_noise,self.rotate, self.flip_horizontal ,self.change_brightness,self.crop,self.translate, self.add_blur,self.duplicate_frames]
         #Iterate the list of list of videos(each element are videos from same video and size)
         for i_video_list in xrange(len(self.videos)):
             
@@ -153,7 +155,7 @@ class VideoDataAugmentation:
                     randnums = [random.uniform(0,1) for _ in xrange(len(functions))]
                     
                     for op in xrange(len(functions)):
-                        if randnums[op] > self.OPERATIONS_PROB:
+                        if randnums[op] < self.OPERATIONS_PROB:
                             operation = functions[op]
                             operation()
 
@@ -294,22 +296,38 @@ class PreprocessVideos:
             id_value = self.labels_dic[key]
             f.write(key + " "+ str(id_value)+"\n")
         f.close()
-        j=0
+        #j=0
         #Output just one video in frames as testing
-        for frame in self.videos[0]:
-            cv2.imwrite(PATH_VIDEOS+"/frame"+str(j)+".png", frame)
-            j+=1
-        
+        #for frame in self.videos[3]:
+        #    cv2.imwrite(PATH_VIDEOS+"/frame"+str(j)+".png", frame)
+        #    j+=1
+
+        f = open(PATH_VIDEOS+"\dataset.txt","w")
+        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+        fourcc = cv2.VideoWriter_fourcc('I', 'Y', 'U', 'V')
+
         for i in xrange(len(self.videos)):
-            video_name = inverted_labels_dict[self.labels[i]]
+            video_name_raw = inverted_labels_dict[self.labels[i]]
             height, width, layers = self.videos[i][0].shape
             size = (height, width)
-            framerate = 60
-            fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-            video = cv2.VideoWriter(PATH_VIDEOS+"/"+video_name + "_" +str(i)+".avi",fourcc,framerate,size)
+            framerate = 1
+            
+            #fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+            video_name = video_name_raw + "_" +str(i)+".avi"
+            video_path = PATH_VIDEOS+"/"+ video_name
+            video = cv2.VideoWriter(video_path,fourcc,framerate,size)
+            try:
+                os.mkdir(video_path+"_dir")
+            except:
+                pass
             for j in range(len(self.videos[i])):                
                 video.write(self.videos[i][j])
+                cv2.imwrite(video_path+"_dir/"+video_name_raw+"_"+str(j)+".jpg", self.videos[i][j])
             video.release()
+            id_value = self.labels[i]
+            f.write(video_name + " "+ str(id_value)+"\n")
+        f.close()
+    
 
 def main(images_path, json_path):
     preprocess = PreprocessVideos()
